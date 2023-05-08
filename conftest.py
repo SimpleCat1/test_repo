@@ -30,9 +30,9 @@ def pytest_addoption(parser: Parser) -> None:
     )
     parser.addoption(
         '--remote',
-        type=bool,
+        type=str,
         action='store',
-        default=True,
+        default='False',
         help="Choose remote: True or False",
     )
     parser.addoption(
@@ -118,21 +118,21 @@ def browser(request: SubRequest) -> Generator[WebDriver, Any, None]:
             webdriver.Remote(
                 command_executor=url_command_executor,
                 desired_capabilities={"browserName": browser_choose},
-            ) if remote_on else webdriver.Firefox()
+            ) if remote_on == 'True' else webdriver.Firefox()
         )
     elif browser_choose == 'opera':
         browser_get = (
             webdriver.Remote(
                 command_executor=url_command_executor,
                 desired_capabilities={"browserName": browser_choose},
-            ) if remote_on else webdriver.Opera()
+            ) if remote_on == 'True' else webdriver.Opera()
         )
     else:
         browser_get = (
             webdriver.Remote(
                 command_executor=url_command_executor,
                 desired_capabilities=caps,
-            ) if remote_on else webdriver.Chrome()
+            ) if remote_on == 'True' else webdriver.Chrome()
         )
     browser_get.implicitly_wait(5)
     yield browser_get
