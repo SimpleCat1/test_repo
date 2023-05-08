@@ -47,7 +47,7 @@ class TestUserRegistrationPage(CommonHelperUi):
             )
             assert heading == 'Register Account'
 
-    def test_user_registration(self, browser, request):
+    def test_user_registration(self, browser: 'WebDriver', request: 'FixtureRequest'):
         self.open_url(
             browser,
             request,
@@ -68,7 +68,7 @@ class TestUserRegistrationPage(CommonHelperUi):
         self.data_entry(
             browser,
             request,
-            Faker().providers[10].ascii_company_email(),
+            Faker().providers[11].ascii_company_email(),
             web_element=self.element_visibility(browser, request, "//input[@id='input-email']"),
         )
         self.data_entry(
