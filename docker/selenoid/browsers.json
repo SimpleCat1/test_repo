@@ -1,0 +1,149 @@
+{
+	"chrome": {
+		"default": "80",
+		"versions": {
+			"80": {
+				"image": "selenoid/chrome:80.0",
+				"port": "4444",
+				"path": "/",
+				"env": [
+					"TZ=Europe/Moscow",
+					"LANG=ru_RU.UTF-8",
+					"LANGUAGE=ru:en",
+					"LC_ALL=ru_RU.UTF-8"
+				]
+			},
+			"80_VNC": {
+				"image": "selenoid/vnc:chrome_80.0",
+				"port": "4444",
+				"path": "/",
+				"env": [
+					"TZ=Europe/Moscow",
+					"LANG=ru_RU.UTF-8",
+					"LANGUAGE=ru:en",
+					"LC_ALL=ru_RU.UTF-8"
+				]
+			},
+			"81": {
+				"image": "selenoid/chrome:81.0",
+				"port": "4444",
+				"path": "/",
+				"env": [
+					"TZ=Europe/Moscow",
+					"LANG=ru_RU.UTF-8",
+					"LANGUAGE=ru:en",
+					"LC_ALL=ru_RU.UTF-8"
+				]
+			},
+			"81_VNC": {
+				"image": "selenoid/vnc:chrome_81.0",
+				"port": "4444",
+				"path": "/",
+				"env": [
+					"TZ=Europe/Moscow",
+					"LANG=ru_RU.UTF-8",
+					"LANGUAGE=ru:en",
+					"LC_ALL=ru_RU.UTF-8"
+				]
+			}
+		}
+	},
+	"firefox": {
+		"default": "80",
+		"versions": {
+			"80": {
+				"image": "selenoid/firefox:80.0",
+				"port": "4444",
+				"path": "/",
+				"env": [
+					"TZ=Europe/Moscow",
+					"LANG=ru_RU.UTF-8",
+					"LANGUAGE=ru:en",
+					"LC_ALL=ru_RU.UTF-8"
+				]
+			},
+			"80_VNC": {
+				"image": "selenoid/vnc:firefox_80.0",
+				"port": "4444",
+				"path": "/",
+				"env": [
+					"TZ=Europe/Moscow",
+					"LANG=ru_RU.UTF-8",
+					"LANGUAGE=ru:en",
+					"LC_ALL=ru_RU.UTF-8"
+				]
+			},
+			"81": {
+				"image": "selenoid/firefox:81.0",
+				"port": "4444",
+				"path": "/",
+				"env": [
+					"TZ=Europe/Moscow",
+					"LANG=ru_RU.UTF-8",
+					"LANGUAGE=ru:en",
+					"LC_ALL=ru_RU.UTF-8"
+				]
+			},
+			"81_VNC": {
+				"image": "selenoid/vnc:firefox_81.0",
+				"port": "4444",
+				"path": "/",
+				"env": [
+					"TZ=Europe/Moscow",
+					"LANG=ru_RU.UTF-8",
+					"LANGUAGE=ru:en",
+					"LC_ALL=ru_RU.UTF-8"
+				]
+			}
+		}
+	},
+	"opera": {
+		"default": "80",
+		"versions": {
+			"80": {
+				"image": "selenoid/opera:80.0",
+				"port": "4444",
+				"path": "/",
+				"env": [
+					"TZ=Europe/Moscow",
+					"LANG=ru_RU.UTF-8",
+					"LANGUAGE=ru:en",
+					"LC_ALL=ru_RU.UTF-8"
+				]
+			},
+			"80_VNC": {
+				"image": "selenoid/vnc:opera_80.0",
+				"port": "4444",
+				"path": "/",
+				"env": [
+					"TZ=Europe/Moscow",
+					"LANG=ru_RU.UTF-8",
+					"LANGUAGE=ru:en",
+					"LC_ALL=ru_RU.UTF-8"
+				]
+			},
+			"81": {
+				"image": "selenoid/opera:81.0",
+				"port": "4444",
+				"path": "/",
+				"env": [
+					"TZ=Europe/Moscow",
+					"LANG=ru_RU.UTF-8",
+					"LANGUAGE=ru:en",
+					"LC_ALL=ru_RU.UTF-8"
+				]
+			},
+			"81_VNC": {
+				"image": "selenoid/vnc:opera_81.0",
+				"port": "4444",
+				"path": "/",
+				"env": [
+					"TZ=Europe/Moscow",
+					"LANG=ru_RU.UTF-8",
+					"LANGUAGE=ru:en",
+					"LC_ALL=ru_RU.UTF-8"
+				]
+			}
+		}
+	}
+}

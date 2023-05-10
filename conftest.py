@@ -40,7 +40,7 @@ def pytest_addoption(parser: Parser) -> None:
         type=str,
         action='store',
         default='http://192.168.0.102:4444/wd/hub',
-        help="Choose remote url: http://192.168.0.102:8080/wd/hub or another",
+        help="Choose remote url: http://192.168.0.102:4444/wd/hub or another",
     )
     parser.addoption(
         '--browser_version',
@@ -102,7 +102,7 @@ def browser(request: SubRequest) -> Generator[WebDriver, Any, None]:
     browser_choose: str = request.config.getoption("--browser")
     version: str = request.config.getoption("--browser_version")
     url_command_executor: str = request.config.getoption("--command_executor")
-    remote_on: bool = request.config.getoption("--remote")
+    remote_on: str = request.config.getoption("--remote")
     browser_get: WebDriver
     caps = {
         "browserName": browser_choose,
@@ -114,6 +114,8 @@ def browser(request: SubRequest) -> Generator[WebDriver, Any, None]:
         },
     }
     if browser_choose == 'firefox':
+        from selenium.webdriver.firefox.options import Options
+
         browser_get = (
             webdriver.Remote(
                 command_executor=url_command_executor,
@@ -121,6 +123,8 @@ def browser(request: SubRequest) -> Generator[WebDriver, Any, None]:
             ) if remote_on == 'True' else webdriver.Firefox()
         )
     elif browser_choose == 'opera':
+        from selenium.webdriver.opera.options import Options
+
         browser_get = (
             webdriver.Remote(
                 command_executor=url_command_executor,
@@ -128,12 +132,20 @@ def browser(request: SubRequest) -> Generator[WebDriver, Any, None]:
             ) if remote_on == 'True' else webdriver.Opera()
         )
     else:
+        from selenium.webdriver.chrome.options import Options
+
+        chrome_options = Options()
+        chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--no-sandbox") # linux only
+        chrome_options.add_argument("--headless")
         browser_get = (
             webdriver.Remote(
                 command_executor=url_command_executor,
-                desired_capabilities=caps,
-            ) if remote_on == 'True' else webdriver.Chrome()
+                desired_capabilities={"browserName": browser_choose},
+            ) if remote_on == 'True' else webdriver.Chrome(options=chrome_options)
         )
+
     browser_get.implicitly_wait(5)
     yield browser_get
     browser_get.close()
