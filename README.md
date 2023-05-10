@@ -244,7 +244,20 @@ cd docker/selenoid
 ```bash 
 docker compose up
 ```
-6. заходим в браузере по http://ваш_Url_из_шага_0:8082 и вот наш selenoid
+6. Подгружаем браузеры chrome( можно и firefox, opera, там только имя поменять в названии, вместо chrome поставить firefox)
+```bash 
+docker pull selenoid/chrome:80.0
+```
+```bash 
+docker pull selenoid/chrome:81.0
+```
+```bash 
+docker pull selenoid/vnc:chrome_80.0
+```
+```bash 
+docker pull selenoid/vnc:chrome_81.0
+```
+7. заходим в браузере по http://ваш_Url_из_шага_0:8082 и вот наш selenoid
 <p align="center">
   <img src="images/selenoid_chrome.jpg" alt="video" width="1000">
 </p>
