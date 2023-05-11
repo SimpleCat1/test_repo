@@ -11,6 +11,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.opera.webdriver import WebDriver
+from webdriver_manager.opera import OperaDriverManager
 
 
 def pytest_addoption(parser: Parser) -> None:
@@ -25,7 +26,7 @@ def pytest_addoption(parser: Parser) -> None:
         '--browser',
         type=str,
         action='store',
-        default='chrome',
+        default='opera',
         help="Choose browser: chrome or firefox",
     )
     parser.addoption(
@@ -130,11 +131,19 @@ def browser(request: SubRequest) -> Generator[WebDriver, Any, None]:
     elif browser_choose == 'opera':
         from selenium.webdriver.opera.options import Options
 
+        opera_options = Options()
+        opera_options.add_argument("--disable-extensions")
+        opera_options.add_argument("--disable-gpu")
+        opera_options.add_argument("--no-sandbox") # linux only
+        opera_options.add_argument("--headless")
         browser_get = (
             webdriver.Remote(
                 command_executor=url_command_executor,
                 desired_capabilities={"browserName": browser_choose},
-            ) if remote_on == 'True' else webdriver.Opera()
+            ) if remote_on == 'True' else webdriver.Opera(
+                options=opera_options,
+                executable_path=OperaDriverManager().install(),
+            )
         )
     else:
         from selenium.webdriver.chrome.options import Options
