@@ -116,11 +116,16 @@ def browser(request: SubRequest) -> Generator[WebDriver, Any, None]:
     if browser_choose == 'firefox':
         from selenium.webdriver.firefox.options import Options
 
+        firefox_options = Options()
+        firefox_options.add_argument("--disable-extensions")
+        firefox_options.add_argument("--disable-gpu")
+        firefox_options.add_argument("--no-sandbox") # linux only
+        firefox_options.add_argument("--headless")
         browser_get = (
             webdriver.Remote(
                 command_executor=url_command_executor,
                 desired_capabilities={"browserName": browser_choose},
-            ) if remote_on == 'True' else webdriver.Firefox()
+            ) if remote_on == 'True' else webdriver.Firefox(options=firefox_options)
         )
     elif browser_choose == 'opera':
         from selenium.webdriver.opera.options import Options

@@ -86,6 +86,7 @@ pytest --url=http://192.168.0.102:8081 --browser=firefox --remote=False tests
 ```bash
 pytest --url=http://192.168.0.102:8081 --browser=opera --remote=False tests
 ```
+Opera запускать только на удаленном selenoid, так как если запускать локально, то придется указывать сам launcher и operadriver в conftest.py На 137 строчке. Но как пример, что оставил, как запускать
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:green_circle:&nbsp;&nbsp;*Запуск на Selenoid:*
 
@@ -282,4 +283,4 @@ docker build -t tests .
 docker run 3e016f8539e0 pytest test_repo/tests
 ```
 
-Тесты запустятся внутри контейнера, там не будет allure, но он там и не нужен
+Тесты запустятся внутри контейнера, там не будет allure, и там будет работать только chrome, потому что нужно подгружать другие браузеры с драйверами, но оставил один браузер
