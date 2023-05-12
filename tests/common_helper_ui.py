@@ -56,10 +56,10 @@ class CommonHelperUi:
         request: FixtureRequest,
         xpath: str,
         text: str,
-    ) -> Union[bool, str]:
+    ) -> bool:
         self._log_create(request)
         self.logger.info('Owe are waiting for the element to appear in the DOM of the Html page')
-        element_found: Union[bool, str] = (
+        element_found: bool = (
             WebDriverWait(driver, 10).until(EC.text_to_be_present_in_element(
                 (By.XPATH, xpath), text),
             )
@@ -74,21 +74,23 @@ class CommonHelperUi:
         self.logger.critical(f'Element: {xpath} was not found')
         raise TimeoutError(f'Element: {xpath} was not found')
 
-    @allure.step("Click on the element xpath: {xpath} or web_element: {web_element}")
+    @allure.step("Click on the element xpath: {xpath}")
     def click(
         self,
         browser: WebDriver,
         request: FixtureRequest,
         xpath: str = None,
-        web_element: WebElement = None,
+        explicit_expectation_method: str = None,
     ) -> None:
+        """
+        The method is intended both for normal pressing and for calling an explicit element waiting
+        """
         self._log_create(request)
-        if web_element:
-            web_element.click()
-            self.logger.info(f'I click on the Element: {web_element}')
+        if explicit_expectation_method:
+            self.__getattribute__(explicit_expectation_method)(browser, request, xpath).click()
         else:
             browser.find_element_by_xpath(xpath).click()
-            self.logger.info(f'I click on the Element: {xpath}')
+        self.logger.info(f'I click on the Element: {xpath}')
 
     @allure.step("Opening the site by url: {url}")
     def open_url(self, browser: WebDriver, request: FixtureRequest, url: str = None) -> None:
@@ -96,16 +98,25 @@ class CommonHelperUi:
         browser.get(url)
         self.logger.info(f'Open the url: {url}')
 
-    @allure.step("Getting the text from the element xpath: {xpath} or web_element: {web_element}")
+    @allure.step("Getting the text from the element xpath: {xpath}")
     def get_text_element(
             self,
             browser: WebDriver,
             request: FixtureRequest,
             xpath: str = None,
-            web_element: WebElement = None,
+            explicit_expectation_method: str = None,
     ) -> str:
+        """
+        The method is intended both for the usual receipt of text,
+         and for calling an explicit expectation of an element.
+        """
         self._log_create(request)
-        if web_element:
+        if explicit_expectation_method:
+            web_element: WebElement = self.__getattribute__(explicit_expectation_method)(
+                browser,
+                request,
+                xpath,
+            )
             self.logger.info(f'got the text from the element: {web_element.text}')
             return web_element.text
         else:
@@ -115,7 +126,7 @@ class CommonHelperUi:
             return browser.find_element_by_xpath(xpath).text
 
     @allure.step(
-        "Sending the text {value} to the element xpath: {xpath} or web_element: {web_element}",
+        "Sending the text {value} to the element xpath: {xpath}",
     )
     def data_entry(
             self,
@@ -123,15 +134,22 @@ class CommonHelperUi:
             request: FixtureRequest,
             value: str,
             xpath: str = None,
-            web_element: WebElement = None,
+            explicit_expectation_method: str = None,
     ) -> None:
+        """
+        The method is intended both for normal input and for calling an explicit element wait
+        """
         self._log_create(request)
-        if web_element:
-            self.logger.info(f'sent the text to the element: {value}')
+        if explicit_expectation_method:
+            web_element: WebElement = self.__getattribute__(explicit_expectation_method)(
+                browser,
+                request,
+                xpath,
+            )
             web_element.send_keys(value)
         else:
-            self.logger.info(f'sent the text to the element: {value}')
             browser.find_element_by_xpath(xpath).send_keys(value)
+        self.logger.info(f'sent the text to the element: {value}')
 
     def _log_create(self, request: FixtureRequest) -> None:
         """

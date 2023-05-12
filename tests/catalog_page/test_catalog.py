@@ -13,24 +13,19 @@ class TestCatalog(CommonHelperUi):
 
     def test_catalog(self, browser: 'WebDriver', request: 'FixtureRequest'):
         self.open_url(browser, request, request.config.getoption("--url"))
-        self.click(
-            browser,
-            request,
-            web_element=self.element_visibility(
+        with allure.step('Selecting an item from the Components tab'):
+            self.click(
                 browser,
                 request,
                 ''.join(("//li/a[@href='", request.config.getoption("--url"), "/component']")),
-            ),
-        )
-        self.click(
-            browser,
-            request,
-            web_element=self.element_visibility(
+                'element_visibility',
+            )
+            self.click(
                 browser,
                 request,
-                ''.join(("//a[@href='", request.config.getoption("--url"), "/component/monitor']")),
-            ),
-        )
+                ''.join(("//li/a[@href='", request.config.getoption("--url"), "/component/monitor']")),
+                'element_visibility',
+            )
 
         with allure.step('Data verification'):
             assert (

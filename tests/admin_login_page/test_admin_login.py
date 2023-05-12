@@ -13,24 +13,14 @@ class TestAdminLogin(CommonHelperUi):
 
     def test_admin_login_page(self, browser: 'WebDriver', request: 'FixtureRequest'):
         self.open_url(browser, request, request.config.getoption("--url"))
-        self.click(
-            browser,
-            request,
-            web_element=self.element_visibility(
-                browser,
-                request,
-                CommonLocators.dropdown_my_account,
-            ),
-        )
-        self.click(
-            browser,
-            request,
-            web_element=self.element_visibility(
+        with allure.step('Go to the registration page via the "My Account" drop-down list'):
+            self.click(browser, request, CommonLocators.dropdown_my_account, 'element_visibility')
+            self.click(
                 browser,
                 request,
                 "//a[contains(@href,'index.php?route=account/login')]",
-            ),
-        )
+                'element_visibility',
+            )
 
         with allure.step('Data verification'):
             allure.attach(

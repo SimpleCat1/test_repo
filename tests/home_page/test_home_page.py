@@ -12,9 +12,9 @@ class TestHomePage(CommonHelperUi):
 
     def test_home_page(self, browser: 'WebDriver', request: 'FixtureRequest'):
         self.open_url(browser, request, request.config.getoption("--url"))
-        self.logger.info(f"got the text from the element: {browser.title}")
 
         with allure.step('Data verification'):
+            self.logger.info(f"got the text from the element: {browser.title}")
             allure.attach(
                 'Title page',
                 browser.title,

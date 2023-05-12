@@ -26,7 +26,7 @@ def pytest_addoption(parser: Parser) -> None:
         '--browser',
         type=str,
         action='store',
-        default='opera',
+        default='chrome',
         help="Choose browser: chrome or firefox",
     )
     parser.addoption(
