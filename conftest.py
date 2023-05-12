@@ -125,7 +125,7 @@ def browser(request: SubRequest) -> Generator[WebDriver, Any, None]:
         browser_get = (
             webdriver.Remote(
                 command_executor=url_command_executor,
-                desired_capabilities={"browserName": browser_choose},
+                desired_capabilities=caps,
             ) if remote_on == 'True' else webdriver.Firefox(options=firefox_options)
         )
     elif browser_choose == 'opera':
@@ -139,7 +139,7 @@ def browser(request: SubRequest) -> Generator[WebDriver, Any, None]:
         browser_get = (
             webdriver.Remote(
                 command_executor=url_command_executor,
-                desired_capabilities={"browserName": browser_choose},
+                desired_capabilities=caps,
             ) if remote_on == 'True' else webdriver.Opera(
                 options=opera_options,
                 executable_path=OperaDriverManager().install(),
@@ -156,7 +156,7 @@ def browser(request: SubRequest) -> Generator[WebDriver, Any, None]:
         browser_get = (
             webdriver.Remote(
                 command_executor=url_command_executor,
-                desired_capabilities={"browserName": browser_choose},
+                desired_capabilities=caps,
             ) if remote_on == 'True' else webdriver.Chrome(options=chrome_options)
         )
 
