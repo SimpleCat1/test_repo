@@ -35,22 +35,9 @@
 
 ## :computer: Запуск тестов из терминала
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:green_circle:&nbsp;&nbsp;*Запуск тестов локально, с вашего компьютера, при условии, что у вас установлены окружения(драйверы для браузера)*
-Скачиваем этот репозиторий и в папке `src/test/resources/config` создаем файл `local.properties`
-.С данными
-```bash
-login= Ваш_login_на_сайте_https://wooordhunt.ru/
-password= Ваш_password_на_сайте_https://wooordhunt.ru/
-remote= not
-appPackage=Указать_папку_приложения_Wikipedia
-appActivity=Указать_папку_приложения_Wikipedia
-myAndroidDeviceName=Указать_имя_вашего_Телефона(или Эмулятора)
-myVersion=Указать_версию_вашего_телефона(или Эмулятора)
-```
-После в теримнале IntelliJ вводим команду 
-```bash
-gradle clean test_ui
-```
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:green_circle:&nbsp;&nbsp;*Запуск тестов локально, с вашего компьютера, при условии, что у вас установлены окружения(драйверы для браузера). Если не установлены, то используйте Selenoid*
+
+
 И тесты запустятся, через ваш браузер
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:green_circle:&nbsp;&nbsp;*Запуск тестов на вашем удаленном сервере(желательно использовать Selenoid):*
