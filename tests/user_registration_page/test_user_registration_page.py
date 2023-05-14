@@ -1,8 +1,7 @@
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 import allure
 from faker import Faker
-from selenium.webdriver.remote.webelement import WebElement
 
 from tests.common_locators import CommonLocators
 from tests.common_helper_ui import CommonHelperUi
