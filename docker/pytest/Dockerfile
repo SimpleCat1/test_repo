@@ -22,7 +22,12 @@ RUN pip install --upgrade pip
 COPY test_repo test_repo/
 # устанавливаем библиотеки для приложения
 RUN pip install -r test_repo/requirements.txt
-# RUN --network=host
-CMD ["pytest"]
+# Ниже комнады, сделаны, для запуска контейнера, то есть , сначала создаем Image docker build --build-arg browser=chrome ... и другие команды, а потом уже запускае container, и команда CMD сама запустится при build container
+# ARG browser=chrome
+# ARG browser_version=80
+# ARG command_executor=http://192.168.0.102:4444/wd/hub
+# ARG remote=False
+# ARG url=http://192.168.0.102:8081
+# CMD pytest  --browser=${browser} --browser_version=${browser_version} --command_executor=${command_executor} --remote=${remote} --url=${url} test_repo/tests/
 # если вдруг тесты не будут работать для selenoid браузеров, то в conftest , там где удаленный браузер указан, добавить поле option и отдать поля, которые выше сделаны
 # еще, можно добавить обработчик, что запуск идет через docker или же через что-то другое, если докер, то нужно option Добавить в браузер, если не docker , а через компьютер, то без этих option
