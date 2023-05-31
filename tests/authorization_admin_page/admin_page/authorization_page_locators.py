@@ -1,0 +1,11 @@
+class AdminPageLocators:
+    catalog = "//li[@id='menu-catalog']/a[contains(@class,collapsed)]"
+    add_new_product = "//a[@data-original-title='Add New']"
+    product_name = "//input[@id='input-name1']"
+    meta_tag_title = "//input[@id='input-meta-title1']"
+    tab_data = "//a[@href='#tab-data']"
+    model = "//input[@id='input-model']"
+    save_button = "//button[@data-original-title='Save']"
+    table_product_name = "//tbody/tr[1]/td[3]"
+    table_checkbox = "//tbody/tr[1]/td[1]/input"
+    button_delete_product = "//button[@data-original-title='Delete']"

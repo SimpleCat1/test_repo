@@ -18,14 +18,22 @@ ENV DISPLAY=:99
 
 # устанавливаем зависимости
 RUN pip install --upgrade pip
+RUN pip install -U pip
+RUN pip uninstall urllib3
+RUN pip uninstall chardet
+RUN pip install requests
 # копируем содержимое текущей папки в контейнер
 COPY test_repo test_repo/
 # устанавливаем библиотеки для приложения
 RUN pip install -r test_repo/requirements.txt
-# Ниже комнады, сделаны, для запуска контейнера, то есть , сначала создаем Image docker build --build-arg browser=chrome ... и другие команды, а потом уже запускае container, и команда CMD сама запустится при build container
-# ARG browser=chrome
-# ARG browser_version=80
-# ARG command_executor=http://192.168.0.102:4444/wd/hub
-# ARG remote=False
-# ARG url=http://192.168.0.102:8081
-# CMD pytest  --browser=${browser} --browser_version=${browser_version} --command_executor=${command_executor} --remote=${remote} --url=${url} test_repo/tests/
+RUN python3 -m pip install --upgrade --user urllib3==1.24.3
+RUN apt-get update
+ARG browser=chrome
+ARG browser_version=114
+ARG command_executor=http://192.168.0.102:4444/wd/hub
+ARG remote=False
+ARG url=http://192.168.0.102:8081
+ARG browser_without_interfaces=true
+CMD pytest  --browser=${browser} --browser_version=${browser_version} --command_executor=${command_executor} --remote=${remote} --url=${url} --browser_without_interfaces=${browser_without_interfaces} test_repo/tests/
+# если вдруг тесты не будут работать для selenoid браузеров, то в conftest , там где удаленный браузер указан, добавить поле option и отдать поля, которые выше сделаны
+# еще, можно добавить обработчик, что запуск идет через docker или же через что-то другое, если докер, то нужно option Добавить в браузер, если не docker , а через компьютер, то без этих option

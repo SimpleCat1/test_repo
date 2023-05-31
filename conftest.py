@@ -13,6 +13,8 @@ from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.opera.webdriver import WebDriver
 from webdriver_manager.opera import OperaDriverManager
 
+from tests.main_page.main_page import MainPage
+
 
 def pytest_addoption(parser: Parser) -> None:
     parser.addoption(
@@ -49,6 +51,13 @@ def pytest_addoption(parser: Parser) -> None:
         action='store',
         default='80',
         help="Choose browser version: 80 or 81",
+    )
+    parser.addoption(
+        '--browser_without_interfaces',
+        type=str,
+        action='store',
+        default='true',
+        help="Choose whether to display the browser: True or False",
     )
 
 
@@ -104,6 +113,7 @@ def browser(request: SubRequest) -> Generator[WebDriver, Any, None]:
     version: str = request.config.getoption("--browser_version")
     url_command_executor: str = request.config.getoption("--command_executor")
     remote_on: str = request.config.getoption("--remote")
+    browser_interfaces: str = request.config.getoption("--browser_without_interfaces")
     browser_get: WebDriver
     caps = {
         "browserName": browser_choose,
@@ -117,49 +127,79 @@ def browser(request: SubRequest) -> Generator[WebDriver, Any, None]:
     if browser_choose == 'firefox':
         from selenium.webdriver.firefox.options import Options
 
-        firefox_options = Options()
-        firefox_options.add_argument("--disable-extensions")
-        firefox_options.add_argument("--disable-gpu")
-        firefox_options.add_argument("--no-sandbox") # linux only
-        firefox_options.add_argument("--headless")
+        browser: WebDriver
+        if browser_interfaces == 'true':
+            firefox_options = Options()
+            firefox_options.add_argument("--disable-extensions")
+            firefox_options.add_argument("--disable-gpu")
+            firefox_options.add_argument("--no-sandbox")  # linux only
+            firefox_options.add_argument("--headless")
+            browser = webdriver.Firefox(options=firefox_options)
+        else:
+            browser = webdriver.Firefox()
+
         browser_get = (
             webdriver.Remote(
                 command_executor=url_command_executor,
                 desired_capabilities=caps,
-            ) if remote_on == 'True' else webdriver.Firefox(options=firefox_options)
+            ) if remote_on == 'True' else browser
         )
     elif browser_choose == 'opera':
         from selenium.webdriver.opera.options import Options
 
-        opera_options = Options()
-        opera_options.add_argument("--disable-extensions")
-        opera_options.add_argument("--disable-gpu")
-        opera_options.add_argument("--no-sandbox") # linux only
-        opera_options.add_argument("--headless")
+        browser: WebDriver
+        if browser_interfaces == 'true':
+            opera_options = Options()
+            opera_options.add_argument("--disable-extensions")
+            opera_options.add_argument("--disable-gpu")
+            opera_options.add_argument("--no-sandbox")  # linux only
+            opera_options.add_argument("--headless")
+            browser = webdriver.Opera(
+                options=opera_options,
+                executable_path=OperaDriverManager().install(),
+            )
+        else:
+            browser = webdriver.Opera(executable_path=OperaDriverManager().install())
+
         browser_get = (
             webdriver.Remote(
                 command_executor=url_command_executor,
                 desired_capabilities=caps,
-            ) if remote_on == 'True' else webdriver.Opera(
-                options=opera_options,
-                executable_path=OperaDriverManager().install(),
-            )
+            ) if remote_on == 'True' else browser
         )
     else:
         from selenium.webdriver.chrome.options import Options
 
-        chrome_options = Options()
-        chrome_options.add_argument("--disable-extensions")
-        chrome_options.add_argument("--disable-gpu")
-        chrome_options.add_argument("--no-sandbox") # linux only
-        chrome_options.add_argument("--headless")
+        browser: WebDriver
+        if browser_interfaces == 'true':
+            chrome_options = Options()
+            chrome_options.add_argument("--disable-extensions")
+            chrome_options.add_argument("--disable-gpu")
+            chrome_options.add_argument("--no-sandbox")  # linux only
+            chrome_options.add_argument("--headless")
+            browser = webdriver.Chrome(options=chrome_options)
+        else:
+            browser = webdriver.Chrome()
+
         browser_get = (
             webdriver.Remote(
                 command_executor=url_command_executor,
                 desired_capabilities=caps,
-            ) if remote_on == 'True' else webdriver.Chrome(options=chrome_options)
+            ) if remote_on == 'True' else browser
         )
 
     browser_get.implicitly_wait(5)
     yield browser_get
     browser_get.close()
+
+
+@pytest.fixture(scope='module')
+def main_page(browser: WebDriver, request: SubRequest) -> MainPage:
+    """
+    Create a page class to get page methods.
+    """
+    def get_methods_page():
+        return MainPage(browser, request)
+
+    return get_methods_page()
+

@@ -1,0 +1,5 @@
+[pytest]
+testpaths = tests
+python_files = test*.py
+
+addopts = -v --url=http://192.168.0.102:8081 --browser=chrome --remote=False --alluredir=allure-results

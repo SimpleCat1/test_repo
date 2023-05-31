@@ -8,7 +8,7 @@
 <code><img width="5%" title="Docker" src="images/docker-logo.svg"></code>
 <code><img width="5%" title="Allure" src="images/allure-logo.svg"></code>
 <code><img width="5%" title="Git" src="images/picture_git-logo.svg"></code>
-<code><img width="5%" title="PyCharm" src="images/pycharm-logo.svg"></code>
+<code><img width="5%" title="PyCharm" src="images/PyCharm-logo.svg"></code>
 <code><img width="5%" title="Selenium" src="images/selenium-logo.svg"></code>
 <code><img width="5%" title="Selenoid" src="images/picture_selenoid-logo.svg"></code>
 <code><img width="5%" title="Pytest" src="images/Pytest_logo.svg"></code></p>
@@ -35,16 +35,15 @@
 
 ## :computer: Запуск тестов из терминала
 
-Скачиваем этот репозиторий и переходим через 'CMD' в test_repo, эта папка в скаченном репозитории.
-
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:green_circle:&nbsp;&nbsp;*Запуск тестов локально, с вашего компьютера, при условии, что у вас установлены окружения(драйверы для браузера). Если не установлены, то используйте Selenoid*
+
 
 И тесты запустятся, через ваш браузер
 
-Простой запуск(запуск будет локальный на вашем браузере chrome)
-```bash
-pytest tests
-```
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:green_circle:&nbsp;&nbsp;*Запуск тестов на вашем удаленном сервере(желательно использовать Selenoid):*
+
+Скачиваем этот репозиторий и переходим через 'CMD' в test_repo, эта папка в скаченном репозитории.
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:green_circle:&nbsp;&nbsp;*Запуск тестов в несколько потоков:*
 
 В два потока
@@ -58,7 +57,10 @@ pytest --url=http://192.168.0.102:8081 --browser=chrome --remote=False -n 2 test
 pytest --url=http://192.168.0.102:8081 --browser=chrome --remote=False tests
 ```
 
-
+В один поток простой запуск(запуск будет локальный на вашем браузере chrome)
+```bash
+pytest tests
+```
 Больше двух потоков делать нет смысла, тут у меня несколько параллельных тестов, остальные не параллельные
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:green_circle:&nbsp;&nbsp;*Запуск в разных браузерах:*
