@@ -36,12 +36,12 @@ class TestAdminPage:
         admin_authorization_page.click(AuthorizationPageLocators.button_login)
 
         with allure.step('Data verification'):
-            assert admin_authorization_page.text_to_be_present(
+            alert: str = admin_authorization_page.get_text_element(
                 AuthorizationPageLocators.alert_authorization,
-                'No match for Username and/or Password.',
             )
+            assert alert == 'No match for Username and/or Password.'
             allure.attach(
                 'authorization alert',
-                'No match for Username and/or Password.',
+                alert,
                 allure.attachment_type.TEXT,
             )
