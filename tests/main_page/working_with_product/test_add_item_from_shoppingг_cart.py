@@ -6,7 +6,6 @@ import pytest
 from tests.main_page.main_page_locators import MainPageLocators
 
 if TYPE_CHECKING:
-    from selenium.webdriver.chrome.webdriver import WebDriver
     from _pytest.fixtures import FixtureRequest
     from tests.main_page.main_page import MainPage
 

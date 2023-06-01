@@ -35,25 +35,35 @@ class TestProductCard:
         ids=[unit.name for unit in ParametrizationCardProduct.input_data],
     )
     @allure.severity(allure.severity_level.BLOCKER)
-    @allure.title("test_product_card")
-    @allure.description("The title of the product catalog is displayed")
-    def test_product_card(self, browser: 'WebDriver', product_card_page: 'ProductPage', data: 'data_tuple',
-            return_default_bucket_state: 'None'):
+    @allure.title("test_adding_product_from_product_card")
+    @allure.description("adding a product from the product card (negative and positive cases)")
+    def test_adding_product_from_product_card(
+            self,
+            product_card_page: 'ProductPage',
+            data: 'data_tuple',
+            return_default_bucket_state: 'None',
+    ):
         product_card_page.open_url_card_page('macbook')
 
         with allure.step('Data verification'):
-            product_card_page.driver.find_element_by_xpath(ProductPageLocators.input_count_product).clear()
-            product_card_page.data_entry(data.count_product, ProductPageLocators.input_count_product)
-            product_card_page.click(ProductPageLocators.button_add_count_product)
-            cost_of_product = float(product_card_page.get_text_element(ProductPageLocators.text_cost_of_product).replace('$',''))
+            cost_of_product: float = product_card_page.adding_quantity_of_product(data.count_product)
 
         with allure.step('Data verification'):
-            alert_text = product_card_page.get_text_element(MainPageLocators.alert, 'element_visibility')
-            text_remove_product = product_card_page.get_text_element(
+            alert_text: str = product_card_page.get_text_element(
+                MainPageLocators.alert,
+                'element_visibility',
+            )
+            text_remove_product: str = product_card_page.get_text_element(
                 MainPageLocators.basket,
                 'element_visibility',
             )
             allure.attach('Alert text', alert_text, allure.attachment_type.TEXT)
             allure.attach('Basket text', text_remove_product, allure.attachment_type.TEXT)
             assert alert_text == 'Success: You have added MacBook to your shopping cart!\n×'
-            assert text_remove_product == product_card_page.calculation_of_quantity_of_goods_in_basket(data.check, cost_of_product)
+            assert (
+                text_remove_product
+                == product_card_page.calculation_of_quantity_of_goods_in_basket(
+                    data.check,
+                    cost_of_product,
+                )
+            )

@@ -21,7 +21,7 @@ def registration_page(browser: WebDriver, request: SubRequest) -> RegistrationPa
 
 
 @pytest.fixture
-def logout(registration_page: RegistrationPage):
+def logout(registration_page: RegistrationPage) -> None:
     """
     Log out of the authorized account.
     """

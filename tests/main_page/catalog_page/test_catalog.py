@@ -7,7 +7,6 @@ from tests.main_page.catalog_page.catalog_page_locators import CatalogPageLocato
 from tests.main_page.catalog_page.parametrization_catalog import ParametrizationCatalog
 
 if TYPE_CHECKING:
-    from selenium.webdriver.chrome.webdriver import WebDriver
     from _pytest.fixtures import FixtureRequest
     from tests.main_page.main_page import MainPage
 
@@ -16,11 +15,9 @@ if TYPE_CHECKING:
 class TestCatalog:
 
     @allure.severity(allure.severity_level.BLOCKER)
-    @allure.title("test_catalog")
-    @allure.description(
-        "The 'Monitor' page of products displays when navigating through the 'Component' tab",
-    )
-    def test_component_tab(
+    @allure.title("test_component_tab_breadcrumb")
+    @allure.description("Page 'Monitor' bread crumbs")
+    def test_component_tab_breadcrumb(
             self,
             request: 'FixtureRequest',
             main_page: 'MainPage',
@@ -47,11 +44,16 @@ class TestCatalog:
             assert len(main_page.driver.find_elements_by_xpath(CatalogPageLocators.breadcrumb)) == 3
 
     @allure.severity(allure.severity_level.BLOCKER)
-    @allure.title("test_catalog")
+    @allure.title("test_return_to_main_page_with_empty_directory")
     @allure.description(
-        "The 'Monitors' page of products displays when navigating through the 'Components' tab",
+        "return to the main page via the button if there is no product in the catalog"
+        " (the 'mice_and_trackballs' tab)",
     )
-    def test_component_tab_monitors(self, request: 'FixtureRequest', main_page: 'MainPage'):
+    def test_return_to_main_page_with_empty_directory(
+            self,
+            request: 'FixtureRequest',
+            main_page: 'MainPage',
+    ):
         main_page.open_url(request.config.getoption("--url"))
         with allure.step('Selecting an item from the Components tab'):
             main_page.click(main_page.components_tab, 'element_visibility')
@@ -60,11 +62,11 @@ class TestCatalog:
 
         with allure.step('Data verification'):
             current_url: str = main_page.driver.current_url
-            assert (
-                    current_url
-                    == ''.join((request.config.getoption("--url"), '/index.php?route=common/home'))
-            )
             allure.attach('browser url', current_url, allure.attachment_type.TEXT)
+            assert (
+                current_url
+                == ''.join((request.config.getoption("--url"), '/index.php?route=common/home'))
+            )
 
     @pytest.mark.parametrize(
         "data",
@@ -72,11 +74,12 @@ class TestCatalog:
         ids=[unit.name for unit in ParametrizationCatalog.search_data],
     )
     @allure.severity(allure.severity_level.BLOCKER)
-    @allure.title("test_catalog")
+    @allure.title("test_mice_and_trackballs_title")
     @allure.description(
-        "The 'Monitors' page of products displays when navigating through the 'Components' tab",
+        "The 'Mice and Trackballs' product page is displayed when clicking on the 'Components' tab." \
+        " Checking the header",
     )
-    def test_component_tab_monitors(
+    def test_mice_and_trackballs_title(
             self,
             request: 'FixtureRequest',
             main_page: 'MainPage',
@@ -91,5 +94,6 @@ class TestCatalog:
             )
 
         with allure.step('Data verification'):
-            assert main_page.text_to_be_present(CatalogPageLocators.header_catalog, data.name)
-            allure.attach('catalog title', data.name, allure.attachment_type.TEXT)
+            catalog_title: str = main_page.get_text_element(CatalogPageLocators.header_catalog)
+            allure.attach('catalog title', catalog_title, allure.attachment_type.TEXT)
+            assert catalog_title == data.name

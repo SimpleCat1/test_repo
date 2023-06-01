@@ -4,6 +4,7 @@ from _pytest.fixtures import FixtureRequest
 from selenium.webdriver.chrome.webdriver import WebDriver
 
 from tests.main_page.main_page import MainPage
+from tests.main_page.product_card.product_page_locators import ProductPageLocators
 
 
 class ProductPage(MainPage):
@@ -28,3 +29,16 @@ class ProductPage(MainPage):
                 ' item(s) - $',
                 str("{:,.2f}".format(result_calculation_cost)),
             ))
+
+    def adding_quantity_of_product(self, data: Union[str, int]) -> float:
+        """
+        Adding the quantity of the product to the Input of the product card.
+        """
+        self.driver.find_element_by_xpath(
+            ProductPageLocators.input_count_product,
+        ).clear()
+        self.data_entry(data, ProductPageLocators.input_count_product)
+        self.click(ProductPageLocators.button_add_count_product)
+        return float(self.get_text_element(
+            ProductPageLocators.text_cost_of_product,
+        ).replace('$', ''))

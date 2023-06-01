@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING
 
 import allure
 import pytest
-from faker import Faker
 
 from tests.main_page.main_page_locators import MainPageLocators
 from tests.main_page.user_registration_page.parametrization_registration_user import (
@@ -12,7 +11,6 @@ from tests.main_page.user_registration_page.registration_page_locators import (
     RegistrationPageLocators,
 )
 if TYPE_CHECKING:
-    from selenium.webdriver.chrome.webdriver import WebDriver
     from _pytest.fixtures import FixtureRequest
     from tests.main_page.main_page import MainPage
     from tests.main_page.user_registration_page.registration_page import RegistrationPage
@@ -26,7 +24,6 @@ class TestUserRegistrationPage:
     @allure.description("The registration header is specified")
     def test_user_registration_page(
             self,
-            browser: 'WebDriver',
             request: 'FixtureRequest',
             main_page: 'MainPage',
     ):
@@ -41,7 +38,7 @@ class TestUserRegistrationPage:
 
     @allure.severity(allure.severity_level.BLOCKER)
     @allure.title("test_user_registration")
-    @allure.description("Registration of a new user")
+    @allure.description("New user registration (successful)")
     def test_user_registration(
             self,
             request: 'FixtureRequest',
@@ -56,21 +53,16 @@ class TestUserRegistrationPage:
             registration_page.user_registration('1111', '1111')
 
         with allure.step('Data verification'):
+            header_page_registration: str = registration_page.get_text_element(
+                RegistrationPageLocators.header_success_registration,
+                'element_visibility',
+            )
             allure.attach(
                 'text in bread crumbs',
-                registration_page.get_text_element(
-                    RegistrationPageLocators.header_success_registration,
-                    'element_visibility',
-                ),
+                header_page_registration,
                 allure.attachment_type.TEXT,
             )
-            assert (
-                    registration_page.get_text_element(
-                        RegistrationPageLocators.header_success_registration,
-                        'element_visibility',
-                    )
-                    == 'Your Account Has Been Created!'
-            )
+            assert header_page_registration == 'Your Account Has Been Created!'
 
     @pytest.mark.parametrize(
         "data",
@@ -78,11 +70,10 @@ class TestUserRegistrationPage:
         ids=[unit.name for unit in ParametrizationRegistrationUser.user_name_incorrect],
     )
     @allure.severity(allure.severity_level.BLOCKER)
-    @allure.title("test_user_registration")
-    @allure.description("Registration of a new user")
+    @allure.title("test_user_registration_wrong_name")
+    @allure.description("Registering a new user (with an incorrect username)")
     def test_user_registration_wrong_name(
             self,
-            browser: 'WebDriver',
             request: 'FixtureRequest',
             registration_page: 'RegistrationPage',
             data: 'data_tuple',
@@ -116,8 +107,8 @@ class TestUserRegistrationPage:
         ids=[unit.name for unit in ParametrizationRegistrationUser.input_data_errors_password],
     )
     @allure.severity(allure.severity_level.BLOCKER)
-    @allure.title("test_user_registration")
-    @allure.description("Registration of a new user")
+    @allure.title("test_registration_error_password")
+    @allure.description("Registration of a new user (with a password that will not create a user)")
     def test_registration_error_password(
             self,
             registration_page: 'RegistrationPage',
@@ -128,11 +119,11 @@ class TestUserRegistrationPage:
             registration_page.user_registration(data.password, data.password_confirm)
 
         with allure.step('Data verification'):
-            allure.attach('popup Input errors', data.check, allure.attachment_type.TEXT)
-            assert registration_page.text_to_be_present(
+            popup_error_password: str = registration_page.get_text_element(
                 RegistrationPageLocators.popup_error_password,
-                data.check,
             )
+            allure.attach('popup Input errors', popup_error_password, allure.attachment_type.TEXT)
+            assert popup_error_password == data.check
 
     @pytest.mark.parametrize(
         "data",
@@ -142,8 +133,10 @@ class TestUserRegistrationPage:
         ],
     )
     @allure.severity(allure.severity_level.BLOCKER)
-    @allure.title("test_user_registration")
-    @allure.description("Registration of a new user")
+    @allure.title("test_registration_error_password_confirm")
+    @allure.description(
+        "Registration of a new user (the confirmation password is different from the password)",
+    )
     def test_registration_error_password_confirm(
             self,
             registration_page: 'RegistrationPage',
@@ -155,11 +148,15 @@ class TestUserRegistrationPage:
             registration_page.user_registration(data.password, data.password_confirm)
 
         with allure.step('Data verification'):
-            allure.attach('popup Input errors', data.check, allure.attachment_type.TEXT)
-            assert registration_page.text_to_be_present(
+            popup_error_password_confirm: str = registration_page.get_text_element(
                 RegistrationPageLocators.popup_error_password_confirm,
-                data.check,
             )
+            allure.attach(
+                'popup Input errors',
+                popup_error_password_confirm,
+                allure.attachment_type.TEXT,
+            )
+            assert popup_error_password_confirm == data.check
 
     @pytest.mark.parametrize(
         "data",
@@ -167,8 +164,8 @@ class TestUserRegistrationPage:
         ids=[unit.name for unit in ParametrizationRegistrationUser.input_data_errors_telephone],
     )
     @allure.severity(allure.severity_level.BLOCKER)
-    @allure.title("test_user_registration")
-    @allure.description("Registration of a new user")
+    @allure.title("test_registration_error_telephone")
+    @allure.description("Registering a new user (with the wrong phone number)")
     def test_registration_error_telephone(
             self,
             registration_page: 'RegistrationPage',
@@ -183,15 +180,15 @@ class TestUserRegistrationPage:
             )
 
         with allure.step('Data verification'):
-            allure.attach('popup Input errors', data.check, allure.attachment_type.TEXT)
-            assert registration_page.text_to_be_present(
+            popup_error_telephone: str = registration_page.get_text_element(
                 RegistrationPageLocators.popup_error_telephone,
-                data.check,
             )
+            allure.attach('popup Input errors', popup_error_telephone, allure.attachment_type.TEXT)
+            assert popup_error_telephone == data.check
 
     @allure.severity(allure.severity_level.BLOCKER)
-    @allure.title("test_user_registration")
-    @allure.description("Registration of a new user")
+    @allure.title("test_user_registration_wrong_email")
+    @allure.description("New user registration(invalid mail form)")
     def test_user_registration_wrong_email(
             self,
             request: 'FixtureRequest',

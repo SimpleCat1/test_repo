@@ -10,18 +10,16 @@ from tests.main_page.search_input.search_page import SearchPage
 
 if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest
-    from selenium.webdriver.chrome.webdriver import WebDriver
 
 
 @pytest.mark.usefixtures("search_page")
 class TestSearchInput:
 
     @allure.severity(allure.severity_level.BLOCKER)
-    @allure.title("test_admin_login_page")
-    @allure.description("The Login page is displayed when navigating through the tab")
+    @allure.title("test_product_search_input")
+    @allure.description("checking the found search products")
     def test_product_search_input(
             self,
-            browser: 'WebDriver',
             request: 'FixtureRequest',
             search_page: 'SearchPage',
     ):
@@ -36,19 +34,18 @@ class TestSearchInput:
                     SearchPageLocators.name_products,
                 )
             ]
-            SearchPage.check_text_of_products('MacBook', received_list_of_products)
             allure.attach(
                 'list of products received',
                 received_list_of_products,
                 allure.attachment_type.TEXT,
             )
+            SearchPage.check_text_of_products('MacBook', received_list_of_products)
 
     @allure.severity(allure.severity_level.BLOCKER)
-    @allure.title("test_admin_login_page")
-    @allure.description("The Login page is displayed when navigating through the tab")
+    @allure.title("test_empty_search_input")
+    @allure.description("empty search")
     def test_empty_search_input(
             self,
-            browser: 'WebDriver',
             request: 'FixtureRequest',
             search_page: 'SearchPage',
     ):
@@ -59,12 +56,15 @@ class TestSearchInput:
 
         with allure.step('Data verification'):
             search_page.element_invisibility(SearchPageLocators.card_products)
-            search_page.text_to_be_present(SearchPageLocators.header_result_search, 'Search')
+            header_search: str = search_page.get_text_element(
+                SearchPageLocators.header_result_search,
+            )
             allure.attach(
                 'the search title looks like this',
-                'Search',
+                header_search,
                 allure.attachment_type.TEXT,
             )
+            assert header_search == 'Search'
 
     @pytest.mark.parametrize(
         "data",
@@ -72,11 +72,10 @@ class TestSearchInput:
         ids=[unit for unit in ParametrizationSearch.search_data],
     )
     @allure.severity(allure.severity_level.BLOCKER)
-    @allure.title("test_admin_login_page")
-    @allure.description("The Login page is displayed when navigating through the tab")
+    @allure.title("test_irrelevant_search_input")
+    @allure.description("Irrelevant search for a product that does not exist")
     def test_irrelevant_search_input(
             self,
-            browser: 'WebDriver',
             request: 'FixtureRequest',
             search_page: 'SearchPage',
             data: str,
@@ -88,12 +87,12 @@ class TestSearchInput:
 
         with allure.step('Data verification'):
             search_page.element_invisibility(SearchPageLocators.card_products)
-            search_page.text_to_be_present(
+            header_search: str = search_page.get_text_element(
                 SearchPageLocators.header_result_search,
-                f'Search - {data}',
             )
             allure.attach(
                 'the search title looks like this',
-                f'Search - {data}',
+                header_search,
                 allure.attachment_type.TEXT,
             )
+            assert header_search == f'Search - {data}'

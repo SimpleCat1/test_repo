@@ -9,7 +9,6 @@ from tests.main_page.main_page_locators import MainPageLocators
 if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest
     from tests.main_page.main_page import MainPage
-    from selenium.webdriver.chrome.webdriver import WebDriver
 
 
 @pytest.mark.usefixtures("main_page")
@@ -20,7 +19,6 @@ class TestAdminLogin:
     @allure.description("The Login page is displayed when navigating through the tab")
     def test_admin_login_page(
             self,
-            browser: 'WebDriver',
             request: 'FixtureRequest',
             main_page: 'MainPage',
     ):
@@ -30,5 +28,6 @@ class TestAdminLogin:
             main_page.click(MainPageLocators.dropdown_my_account_login, 'element_visibility')
 
         with allure.step('Data verification'):
-            allure.attach('Heading', LoginPageLocators.header_customer, allure.attachment_type.TEXT)
-            assert main_page.get_text_element(LoginPageLocators.header_customer) == 'New Customer'
+            header_customer: str = main_page.get_text_element(LoginPageLocators.header_customer)
+            allure.attach('header customer', header_customer, allure.attachment_type.TEXT)
+            assert header_customer == 'New Customer'

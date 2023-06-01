@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 class TestChangCurrency:
 
     @allure.severity(allure.severity_level.BLOCKER)
-    @allure.title("test_product_card")
+    @allure.title("test_change_currency")
     @allure.description("The currency changes on the main page")
     @pytest.mark.unparalleled
     def test_change_currency(
