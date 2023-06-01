@@ -37,5 +37,10 @@ class TestUserRegistrationPage:
         admin_page.click(AdminPageLocators.save_button)
 
         with allure.step('Data verification'):
-            assert admin_page.text_to_be_present(AdminPageLocators.table_product_name, '12')
-            allure.attach('the product name is displayed as:', '12', allure.attachment_type.TEXT)
+            name_product: str = admin_page.get_text_element(AdminPageLocators.table_product_name)
+            assert name_product == '12'
+            allure.attach(
+                'the product name is displayed as:',
+                name_product,
+                allure.attachment_type.TEXT,
+            )
