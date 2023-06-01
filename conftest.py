@@ -11,6 +11,8 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.opera.webdriver import WebDriver
 from webdriver_manager.opera import OperaDriverManager
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 
 from tests.main_page.main_page import MainPage
 
@@ -133,9 +135,9 @@ def choose_browser(request: SubRequest) -> Callable:
                 firefox_options.add_argument("--disable-gpu")
                 firefox_options.add_argument("--no-sandbox")  # linux only
                 firefox_options.add_argument("--headless")
-                return webdriver.Firefox(options=firefox_options)
+                return webdriver.Firefox(GeckoDriverManager().install(), options=firefox_options)
             elif remote_on == 'False':
-                return webdriver.Firefox()
+                return webdriver.Firefox(GeckoDriverManager().install())
             else:
                 return webdriver.Remote(
                     command_executor=url_command_executor,
@@ -170,9 +172,9 @@ def choose_browser(request: SubRequest) -> Callable:
                 chrome_options.add_argument("--disable-gpu")
                 chrome_options.add_argument("--no-sandbox")  # linux only
                 chrome_options.add_argument("--headless")
-                return webdriver.Chrome(options=chrome_options)
+                return webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
             elif remote_on == 'False':
-                return webdriver.Chrome()
+                return webdriver.Chrome(ChromeDriverManager().install())
             else:
                 return webdriver.Remote(
                     command_executor=url_command_executor,
@@ -198,3 +200,4 @@ def main_page(browser: WebDriver, request: SubRequest) -> MainPage:
         return MainPage(browser, request)
 
     return get_methods_page()
+
