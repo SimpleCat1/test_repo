@@ -18,15 +18,10 @@ ENV DISPLAY=:99
 
 # устанавливаем зависимости
 RUN pip install --upgrade pip
-RUN pip install -U pip
-RUN pip uninstall urllib3
-RUN pip uninstall chardet
-RUN pip install requests
 # копируем содержимое текущей папки в контейнер
 COPY test_repo test_repo/
 # устанавливаем библиотеки для приложения
 RUN pip install -r test_repo/requirements.txt
-RUN python3 -m pip install --upgrade --user urllib3==1.24.3
 RUN apt-get update
 ARG browser=chrome
 ARG browser_version=114
