@@ -8,18 +8,16 @@ from tests.main_page.product_card.parametrization_card_product import Parametriz
 from tests.main_page.product_card.product_page_locators import ProductPageLocators
 
 if TYPE_CHECKING:
-    from selenium.webdriver.chrome.webdriver import WebDriver
     from _pytest.fixtures import FixtureRequest
     from tests.main_page.main_page import MainPage
 
 
-@pytest.mark.usefixtures("main_page", "product_card_page")
 class TestProductCard:
 
     @allure.severity(allure.severity_level.BLOCKER)
     @allure.title("test_product_card")
     @allure.description("The title of the product catalog is displayed")
-    def test_product_card(self, browser: 'WebDriver', request: 'FixtureRequest', main_page: 'MainPage'):
+    def test_product_card(self, request: 'FixtureRequest', main_page: 'MainPage'):
         main_page.open_url(request.config.getoption("--url"))
         with allure.step('Clicked on the product'):
             main_page.click(MainPageLocators.first_product, 'element_visibility')

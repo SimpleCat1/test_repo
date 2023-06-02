@@ -1,14 +1,12 @@
 from typing import TYPE_CHECKING
 
 import allure
-import pytest
 
 if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest
     from tests.main_page.main_page import MainPage
 
 
-@pytest.mark.usefixtures("main_page")
 class TestHomePage:
 
     @allure.severity(allure.severity_level.BLOCKER)

@@ -12,7 +12,6 @@ if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest
 
 
-@pytest.mark.usefixtures("search_page")
 class TestSearchInput:
 
     @allure.severity(allure.severity_level.BLOCKER)

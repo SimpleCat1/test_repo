@@ -9,8 +9,13 @@ if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest
     from tests.main_page.main_page import MainPage
 
+"""
+ @pytest.mark.usefixtures("main_page") эта штука работает, если автвоматически что-то
+ настраивать или же как метод(чертеж), которые потом вызывается self.main_page в коде
+ теста. Но не для вызова методов, почему-то не видит, хотя можно попробовать через request
+"""
 
-@pytest.mark.usefixtures("main_page")
+
 class TestAddItemFromShoppingCart:
 
     @allure.severity(allure.severity_level.BLOCKER)

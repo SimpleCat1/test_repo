@@ -13,7 +13,6 @@ if TYPE_CHECKING:
     from tests.authorization_admin_page.admin_page_authorization import AuthorizationAdminPage
 
 
-@pytest.mark.usefixtures("admin_authorization_page")
 class TestAdminPage:
 
     @pytest.mark.parametrize(

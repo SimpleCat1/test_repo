@@ -11,7 +11,6 @@ if TYPE_CHECKING:
     from tests.main_page.main_page import MainPage
 
 
-@pytest.mark.usefixtures("main_page")
 class TestAdminLogin:
 
     @allure.severity(allure.severity_level.BLOCKER)

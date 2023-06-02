@@ -16,7 +16,6 @@ if TYPE_CHECKING:
     from tests.main_page.user_registration_page.registration_page import RegistrationPage
 
 
-@pytest.mark.usefixtures("main_page", "registration_page")
 class TestUserRegistrationPage:
 
     @allure.severity(allure.severity_level.BLOCKER)

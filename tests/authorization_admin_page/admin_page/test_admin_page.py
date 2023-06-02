@@ -11,7 +11,6 @@ if TYPE_CHECKING:
     from tests.authorization_admin_page.admin_page.admin_page import AdminPage
 
 
-@pytest.mark.usefixtures("admin_authorization_page")
 class TestUserRegistrationPage:
 
     @allure.severity(allure.severity_level.BLOCKER)
