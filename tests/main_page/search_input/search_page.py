@@ -3,6 +3,8 @@ from typing import Generator, Any, List
 
 from _pytest.fixtures import FixtureRequest
 from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.firefox.webdriver import WebDriver
+from selenium.webdriver.opera.webdriver import WebDriver
 
 from tests.main_page.main_page import MainPage
 
