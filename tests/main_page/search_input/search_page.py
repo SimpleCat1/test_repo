@@ -25,5 +25,5 @@ class SearchPage(MainPage):
         """
         We check that the list is relevant to the search query.
         """
-        for unit in (re.match(text_check, unit) is not None for unit in data):
-            assert unit is not False
+        for check in (re.match(text_check, unit) is not None for unit in data):
+            assert check is not False

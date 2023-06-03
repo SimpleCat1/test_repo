@@ -148,7 +148,7 @@ class CommonHelperUi:
     )
     def data_entry(
             self,
-            value: str,
+            value: Union[str, int, float],
             xpath: str = None,
             explicit_expectation_method: str = None,
     ) -> None:

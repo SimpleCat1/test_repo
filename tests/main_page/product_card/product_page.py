@@ -38,7 +38,7 @@ class ProductPage(MainPage):
                 str("{:,.2f}".format(result_calculation_cost)),
             ))
 
-    def adding_quantity_of_product(self, data: Union[str, int]) -> float:
+    def adding_quantity_of_product(self, data: Union[str, int, float]) -> float:
         """
         Adding the quantity of the product to the Input of the product card.
         """
