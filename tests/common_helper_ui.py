@@ -1,5 +1,6 @@
 import logging
-import time
+import os
+import re
 from typing import Union, Optional
 
 import allure
@@ -171,8 +172,10 @@ class CommonHelperUi:
         """
         if self.logger is None:
             name_test: str = self.request.node.fspath.purebasename
+            # =   # нужно регулярка , чтобы убрать лишний код 'C:\\Users\\PS\\Documents\\test_repo\\tests\\main_page\\catalog_page'
+            path: str = re.findall('.*test_repo', os.path.abspath(os.curdir))[0]
             self.logger = logging.getLogger(name_test)
-            file_handler = logging.FileHandler(f"{name_test}.log", 'w+', 'utf-8')
+            file_handler = logging.FileHandler(f"{path}\\logs\\{name_test}.log", 'w+', 'utf-8')
             file_handler.setFormatter(
                 logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s"),
             )
