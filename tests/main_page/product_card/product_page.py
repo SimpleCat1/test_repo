@@ -42,9 +42,6 @@ class ProductPage(MainPage):
         """
         Adding the quantity of the product to the Input of the product card.
         """
-        self.driver.find_element_by_xpath(
-            ProductPageLocators.input_count_product,
-        ).clear()
         self.data_entry(data, ProductPageLocators.input_count_product)
         self.click(ProductPageLocators.button_add_count_product)
         return float(self.get_text_element(

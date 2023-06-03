@@ -148,7 +148,7 @@ class CommonHelperUi:
     )
     def data_entry(
             self,
-            value: Union[str, int, float],
+            value: str,
             xpath: str = None,
             explicit_expectation_method: str = None,
     ) -> None:
@@ -161,6 +161,7 @@ class CommonHelperUi:
             web_element.clear()
             web_element.send_keys(value)
         else:
+            self.driver.find_element_by_xpath(xpath).clear()
             self.driver.find_element_by_xpath(xpath).send_keys(value)
         self.logger.info(f'sent the text to the element: {value}')
 
