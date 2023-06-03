@@ -9,12 +9,6 @@ if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest
     from tests.main_page.main_page import MainPage
 
-"""
- @pytest.mark.usefixtures("main_page") эта штука работает, если автвоматически что-то
- настраивать или же как метод(чертеж), которые потом вызывается self.main_page в коде
- теста. Но не для вызова методов, почему-то не видит, хотя можно попробовать через request
-"""
-
 
 class TestAddItemFromShoppingCart:
 
@@ -37,10 +31,15 @@ class TestAddItemFromShoppingCart:
                 MainPageLocators.alert,
                 'element_visibility',
             )
-            text_added_product: str = main_page.get_text_element(
+            shopping_cart_text: bool = main_page.text_to_be_present(
                 MainPageLocators.basket,
-                'element_visibility',
+                '1 item(s) - $602.00',
             )
             allure.attach('Alert text', alert_text, allure.attachment_type.TEXT)
+            allure.attach(
+                'Alert text',
+                'the cart has a product with the following data "1 item(s) - $602.00": '
+                f'{shopping_cart_text}',
+                allure.attachment_type.TEXT,
+            )
             assert alert_text == 'Success: You have added MacBook to your shopping cart!\n×'
-            assert text_added_product == '1 item(s) - $602.00'

@@ -170,8 +170,9 @@ class CommonHelperUi:
         If the file exists, it will overwrite it.
         """
         if self.logger is None:
-            self.logger = logging.getLogger(self.request.node.name)
-            file_handler = logging.FileHandler(f"{self.request.node.name}.log", 'w+', 'utf-8')
+            name_test: str = self.request.node.fspath.purebasename
+            self.logger = logging.getLogger(name_test)
+            file_handler = logging.FileHandler(f"{name_test}.log", 'w+', 'utf-8')
             file_handler.setFormatter(
                 logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s"),
             )
