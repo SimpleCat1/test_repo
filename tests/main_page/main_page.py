@@ -1,15 +1,18 @@
+from typing import TYPE_CHECKING
+
 import allure
 
 from tests.common_helper_ui import CommonHelperUi
 from _pytest.fixtures import FixtureRequest
-from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.webdriver.firefox.webdriver import WebDriver
-from selenium.webdriver.opera.webdriver import WebDriver
+if TYPE_CHECKING:
+    from selenium.webdriver.chrome.webdriver import WebDriver
+    from selenium.webdriver.firefox.webdriver import WebDriver
+    from selenium.webdriver.opera.webdriver import WebDriver
 
 
 class MainPage(CommonHelperUi):
 
-    def __init__(self, driver: WebDriver, request: FixtureRequest):
+    def __init__(self, driver: 'WebDriver', request: FixtureRequest):
         super().__init__(driver, request)
         self.components_tab = ''.join((
             "//li/a[@href='",

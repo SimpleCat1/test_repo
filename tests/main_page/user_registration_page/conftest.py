@@ -1,16 +1,21 @@
+from typing import TYPE_CHECKING
+
 import pytest
 from _pytest.fixtures import SubRequest
-from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from tests.main_page.main_page_locators import MainPageLocators
 from tests.main_page.user_registration_page.registration_page import RegistrationPage
+if TYPE_CHECKING:
+    from selenium.webdriver.chrome.webdriver import WebDriver
+    from selenium.webdriver.firefox.webdriver import WebDriver
+    from selenium.webdriver.opera.webdriver import WebDriver
 
 
 @pytest.fixture(scope='module')
-def registration_page(browser: WebDriver, request: SubRequest) -> RegistrationPage:
+def registration_page(browser: 'WebDriver', request: SubRequest) -> RegistrationPage:
     """
     Create a page class to get page methods.
     """

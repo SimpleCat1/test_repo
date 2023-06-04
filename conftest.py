@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Generator, Any, Callable
+from typing import Generator, Any, Callable, TYPE_CHECKING
 import allure
 import pytest
 from _pytest.config.argparsing import Parser
@@ -7,12 +7,13 @@ from _pytest.fixtures import SubRequest
 from _pytest.python import Function
 from allure_commons.types import AttachmentType
 from selenium import webdriver
-from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.webdriver.firefox.webdriver import WebDriver
-from selenium.webdriver.opera.webdriver import WebDriver
 from webdriver_manager.opera import OperaDriverManager
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
+if TYPE_CHECKING:
+    from selenium.webdriver.chrome.webdriver import WebDriver
+    from selenium.webdriver.firefox.webdriver import WebDriver
+    from selenium.webdriver.opera.webdriver import WebDriver
 
 from tests.main_page.main_page import MainPage
 
@@ -76,7 +77,7 @@ def pytest_runtest_makereport(item: Function) -> None:
 
 
 # make a screenshot with a name of the test, date and time
-def take_screenshot(driver: WebDriver, nodeid: str) -> None:
+def take_screenshot(driver: 'WebDriver', nodeid: str) -> None:
     file_name = (
         f'{nodeid}_{datetime.today().strftime("%Y-%m-%d_%H:%M")}.png'
         .replace("/","_").replace("::","__")
@@ -103,20 +104,20 @@ def test_failed_check(request: SubRequest) -> None:
                     [True for _, unit in enumerate(request.node.fixturenames) if unit == 'browser']
                 ) == 1 else False
         )):
-            driver: WebDriver = request.node.funcargs['browser']
+            driver: 'WebDriver' = request.node.funcargs['browser']
             take_screenshot(driver, request.node.nodeid)
             print("executing test failed", request.node.nodeid)
 
 
 @pytest.fixture(scope='session')
 def choose_browser(request: SubRequest) -> Callable:
-    def choose_browser() -> WebDriver:
+    def choose_browser() -> 'WebDriver':
         browser_choose: str = request.config.getoption("--browser")
         version: str = request.config.getoption("--browser_version")
         url_command_executor: str = request.config.getoption("--command_executor")
         remote_on: str = request.config.getoption("--remote")
         browser_interfaces: str = request.config.getoption("--browser_without_interfaces")
-        browser_get: WebDriver
+        browser_get: 'WebDriver'
         caps = {
             "browserName": browser_choose,
             "browserVersion": version,
@@ -184,15 +185,15 @@ def choose_browser(request: SubRequest) -> Callable:
 
 
 @pytest.fixture(scope='session')
-def browser(choose_browser: Callable) -> Generator[WebDriver, Any, None]:
-    browser_get: WebDriver = choose_browser()
+def browser(choose_browser: Callable) -> Generator['WebDriver', Any, None]:
+    browser_get: 'WebDriver' = choose_browser()
     browser_get.implicitly_wait(5)
     yield browser_get
     browser_get.close()
 
 
 @pytest.fixture(scope='module')
-def main_page(browser: WebDriver, request: SubRequest) -> MainPage:
+def main_page(browser: 'WebDriver', request: SubRequest) -> MainPage:
     """
     Create a page class to get page methods.
     """

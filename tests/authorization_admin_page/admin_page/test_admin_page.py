@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING
 
 import allure
-import pytest
 
 from tests.authorization_admin_page.admin_page.authorization_page_locators import AdminPageLocators
 from tests.authorization_admin_page.authorization_page_locators import AuthorizationPageLocators

@@ -1,17 +1,18 @@
-from typing import Union
+from typing import Union, TYPE_CHECKING
 
 from _pytest.fixtures import FixtureRequest
-from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.webdriver.firefox.webdriver import WebDriver
-from selenium.webdriver.opera.webdriver import WebDriver
 
 from tests.main_page.main_page import MainPage
 from tests.main_page.product_card.product_page_locators import ProductPageLocators
+if TYPE_CHECKING:
+    from selenium.webdriver.chrome.webdriver import WebDriver
+    from selenium.webdriver.firefox.webdriver import WebDriver
+    from selenium.webdriver.opera.webdriver import WebDriver
 
 
 class ProductPage(MainPage):
 
-    def __init__(self, driver: WebDriver, request: FixtureRequest):
+    def __init__(self, driver: 'WebDriver', request: FixtureRequest):
         super().__init__(driver, request)
 
     def open_url_card_page(self, name_product: str) -> None:

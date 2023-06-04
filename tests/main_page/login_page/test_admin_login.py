@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING
 
 import allure
-import pytest
 
 from tests.main_page.login_page.login_page_locators import LoginPageLocators
 from tests.main_page.main_page_locators import MainPageLocators
