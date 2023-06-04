@@ -175,7 +175,11 @@ class CommonHelperUi:
             name_test: str = self.request.node.fspath.purebasename
             # =   # нужно регулярка , чтобы убрать лишний код 'C:\\Users\\PS\\Documents\\test_repo\\tests\\main_page\\catalog_page'
             print(f'asdfgh {os.path.abspath(os.curdir)}')
-            path: str = re.findall('.*test_repo', os.path.abspath(os.curdir))[0]
+            path: str
+            try:
+                path = re.findall('.*test_repo', os.path.abspath(os.curdir))[0]
+            except IndexError as e:
+                path = '/var/jenkins_home/workspace/pytest'
             self.logger = logging.getLogger(name_test)
             file_handler = logging.FileHandler(f"{path}\\logs\\{name_test}.log", 'w+', 'utf-8')
             file_handler.setFormatter(
