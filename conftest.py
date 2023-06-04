@@ -22,7 +22,7 @@ def pytest_addoption(parser: Parser) -> None:
         '--url',
         type=str,
         action='store',
-        default='http://192.168.0.105:8081',
+        default='http://192.168.0.100:8081',
         help="Choose url: https://www.schoolsw3.com or http://192.168.0.102:8081",
     )
     parser.addoption(
@@ -43,7 +43,7 @@ def pytest_addoption(parser: Parser) -> None:
         '--command_executor',
         type=str,
         action='store',
-        default='http://192.168.0.102:4444/wd/hub',
+        default='http://192.168.0.100:4444/wd/hub',
         help="Choose remote url: http://192.168.0.102:4444/wd/hub or another",
     )
     parser.addoption(
