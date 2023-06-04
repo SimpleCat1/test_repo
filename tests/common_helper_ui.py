@@ -173,7 +173,6 @@ class CommonHelperUi:
         """
         if self.logger is None:
             name_test: str = self.request.node.fspath.purebasename
-            print(f'asdfgh {os.path.abspath(os.curdir)}')
             path: str
             try:
                 path = re.findall('.*test_repo', os.path.abspath(os.curdir))[0]

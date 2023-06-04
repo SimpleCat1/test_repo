@@ -1,17 +1,14 @@
-from typing import TYPE_CHECKING
-
 import pytest
 from _pytest.fixtures import SubRequest
+from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.firefox.webdriver import WebDriver
+from selenium.webdriver.opera.webdriver import WebDriver
 
 from tests.main_page.search_input.search_page import SearchPage
-if TYPE_CHECKING:
-    from selenium.webdriver.chrome.webdriver import WebDriver
-    from selenium.webdriver.firefox.webdriver import WebDriver
-    from selenium.webdriver.opera.webdriver import WebDriver
 
 
 @pytest.fixture(scope='module')
-def search_page(browser: 'WebDriver', request: SubRequest) -> SearchPage:
+def search_page(browser: WebDriver, request: SubRequest) -> SearchPage:
     """
     Create a page class to get page methods.
     """
