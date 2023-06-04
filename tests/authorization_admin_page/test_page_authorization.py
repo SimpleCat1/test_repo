@@ -30,17 +30,16 @@ class TestAdminPage:
             data: 'data_tuple',
     ):
         admin_authorization_page.open_url_registration_page()
-        admin_authorization_page.data_entry(data.username, AuthorizationPageLocators.username)
-        admin_authorization_page.data_entry(data.password, AuthorizationPageLocators.password)
-        admin_authorization_page.click(AuthorizationPageLocators.button_login)
+
+        admin_authorization_page.authorization(data.username, data.password)
 
         with allure.step('Data verification'):
             alert: str = admin_authorization_page.get_text_element(
                 AuthorizationPageLocators.alert_authorization,
             )
-            assert alert == 'No match for Username and/or Password.'
             allure.attach(
                 'authorization alert',
                 alert,
                 allure.attachment_type.TEXT,
             )
+            assert alert == 'No match for Username and/or Password.'
