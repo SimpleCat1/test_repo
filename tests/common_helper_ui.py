@@ -174,6 +174,7 @@ class CommonHelperUi:
         if self.logger is None:
             name_test: str = self.request.node.fspath.purebasename
             # =   # нужно регулярка , чтобы убрать лишний код 'C:\\Users\\PS\\Documents\\test_repo\\tests\\main_page\\catalog_page'
+            print(os.path.abspath(os.curdir))
             path: str = re.findall('.*test_repo', os.path.abspath(os.curdir))[0]
             self.logger = logging.getLogger(name_test)
             file_handler = logging.FileHandler(f"{path}\\logs\\{name_test}.log", 'w+', 'utf-8')
