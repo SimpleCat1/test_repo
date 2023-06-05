@@ -43,26 +43,15 @@ class RegistrationPage(MainPage):
 
         Enter the data in the fields on the registration page.
         """
-        self.data_entry(
-            first_name or faker.Faker().providers[6].first_name(),
-            RegistrationPageLocators.first_name,
-            'element_visibility',
-        )
-        self.data_entry(
-            last_name or faker.Faker().providers[6].last_name(),
-            RegistrationPageLocators.last_name,
-            'element_visibility',
-        )
-        self.data_entry(
-            e_mail or faker.Faker().providers[11].ascii_email(),
-            RegistrationPageLocators.e_mail,
-            'element_visibility',
-        )
-        self.data_entry(
-            telephone or faker.Faker().providers[5].phone_number(),
-            RegistrationPageLocators.telephone,
-            'element_visibility',
-        )
+        first_name: Union[str, int] = first_name or faker.Faker().providers[6].first_name()
+        last_name: Union[str, int] = last_name or faker.Faker().providers[6].last_name()
+        e_mail: Union[str, int] = e_mail or faker.Faker().providers[11].ascii_email()
+        telephone: Union[str, int] = telephone or faker.Faker().providers[5].phone_number()
+
+        self.data_entry(first_name, RegistrationPageLocators.first_name, 'element_visibility')
+        self.data_entry(last_name, RegistrationPageLocators.last_name, 'element_visibility')
+        self.data_entry(e_mail, RegistrationPageLocators.e_mail, 'element_visibility')
+        self.data_entry(telephone, RegistrationPageLocators.telephone, 'element_visibility')
         self.data_entry(password, RegistrationPageLocators.password, 'element_visibility')
         self.data_entry(
             password_confirm,
@@ -106,5 +95,6 @@ class RegistrationPage(MainPage):
             </body>
             </html>
             """,
+            "HTML attachment",
             allure.attachment_type.HTML,
         )

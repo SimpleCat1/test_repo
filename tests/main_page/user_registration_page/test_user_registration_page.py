@@ -32,7 +32,7 @@ class TestUserRegistrationPage:
 
         with allure.step('Data verification'):
             heading: str = main_page.get_text_element(RegistrationPageLocators.header_registration)
-            allure.attach('Heading', heading, allure.attachment_type.TEXT)
+            allure.attach(heading, 'Heading', allure.attachment_type.TEXT)
             assert heading == 'Register Account'
 
     @allure.severity(allure.severity_level.BLOCKER)
@@ -57,8 +57,8 @@ class TestUserRegistrationPage:
                 'element_visibility',
             )
             allure.attach(
-                'text in bread crumbs',
                 header_page_registration,
+                'text in bread crumbs',
                 allure.attachment_type.TEXT,
             )
             assert header_page_registration == 'Your Account Has Been Created!'
@@ -90,9 +90,9 @@ class TestUserRegistrationPage:
         with allure.step('Data verification'):
             current_url: str = registration_page.driver.current_url
             allure.attach(
+                current_url,
                 'The URL of the registration page (there should not be a page of an already'
                 ' authorized user)',
-                current_url,
                 allure.attachment_type.TEXT,
             )
             assert current_url == ''.join((
@@ -121,7 +121,7 @@ class TestUserRegistrationPage:
             popup_error_password: str = registration_page.get_text_element(
                 RegistrationPageLocators.popup_error_password,
             )
-            allure.attach('popup Input errors', popup_error_password, allure.attachment_type.TEXT)
+            allure.attach(popup_error_password, 'popup Input errors', allure.attachment_type.TEXT)
             assert popup_error_password == data.check
 
     @pytest.mark.parametrize(
@@ -151,8 +151,8 @@ class TestUserRegistrationPage:
                 RegistrationPageLocators.popup_error_password_confirm,
             )
             allure.attach(
-                'popup Input errors',
                 popup_error_password_confirm,
+                'popup Input errors',
                 allure.attachment_type.TEXT,
             )
             assert popup_error_password_confirm == data.check
@@ -182,7 +182,7 @@ class TestUserRegistrationPage:
             popup_error_telephone: str = registration_page.get_text_element(
                 RegistrationPageLocators.popup_error_telephone,
             )
-            allure.attach('popup Input errors', popup_error_telephone, allure.attachment_type.TEXT)
+            allure.attach(popup_error_telephone, 'popup Input errors', allure.attachment_type.TEXT)
             assert popup_error_telephone == data.check
 
     @allure.severity(allure.severity_level.BLOCKER)
@@ -203,9 +203,9 @@ class TestUserRegistrationPage:
         with allure.step('Data verification'):
             current_url: str = registration_page.driver.current_url
             allure.attach(
+                current_url,
                 'The URL of the registration page (there should not be a page of an already'
                 ' authorized user)',
-                current_url,
                 allure.attachment_type.TEXT,
             )
             assert current_url == ''.join((

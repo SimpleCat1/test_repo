@@ -27,5 +27,5 @@ class TestAdminLogin:
 
         with allure.step('Data verification'):
             header_customer: str = main_page.get_text_element(LoginPageLocators.header_customer)
-            allure.attach('header customer', header_customer, allure.attachment_type.TEXT)
+            allure.attach(header_customer, 'header customer', allure.attachment_type.TEXT)
             assert header_customer == 'New Customer'

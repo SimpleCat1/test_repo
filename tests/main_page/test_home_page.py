@@ -17,5 +17,5 @@ class TestHomePage:
 
         with allure.step('Data verification'):
             main_page.logger.info(f"got the text from the element: {main_page.driver.title}")
-            allure.attach('Title page', main_page.driver.title, allure.attachment_type.TEXT)
+            allure.attach(main_page.driver.title, 'Title page', allure.attachment_type.TEXT)
             assert main_page.driver.title == 'Your Store'

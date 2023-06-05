@@ -27,5 +27,5 @@ class TestChangCurrency:
 
         with allure.step('Data verification'):
             text_currency: str = main_page.get_text_element(MainPageLocators.currency_value)
-            allure.attach('Text currency', text_currency, allure.attachment_type.TEXT)
+            allure.attach(text_currency, 'Text currency', allure.attachment_type.TEXT)
             assert text_currency == '€'

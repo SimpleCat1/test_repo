@@ -33,7 +33,7 @@ class TestRemovingItemFromShoppingCart:
                 MainPageLocators.basket,
                 'element_visibility',
             )
-            allure.attach('Alert text', alert_text, allure.attachment_type.TEXT)
-            allure.attach('Basket text', text_remove_product, allure.attachment_type.TEXT)
+            allure.attach(alert_text, 'Alert text', allure.attachment_type.TEXT)
+            allure.attach(text_remove_product, 'Basket text', allure.attachment_type.TEXT)
             assert alert_text == 'Success: You have added MacBook to your shopping cart!\n×'
             assert text_remove_product == '0 item(s) - $0.00'

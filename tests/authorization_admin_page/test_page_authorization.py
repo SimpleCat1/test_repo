@@ -38,8 +38,8 @@ class TestAdminPage:
                 AuthorizationPageLocators.alert_authorization,
             )
             allure.attach(
-                'authorization alert',
                 alert,
+                'authorization alert',
                 allure.attachment_type.TEXT,
             )
             assert alert == 'No match for Username and/or Password.'

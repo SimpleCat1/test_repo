@@ -35,11 +35,11 @@ class TestAddItemFromShoppingCart:
                 MainPageLocators.basket,
                 '1 item(s) - $602.00',
             )
-            allure.attach('Alert text', alert_text, allure.attachment_type.TEXT)
+            allure.attach(alert_text, 'Alert text', allure.attachment_type.TEXT)
             allure.attach(
-                'Alert text',
                 'the cart has a product with the following data "1 item(s) - $602.00": '
                 f'{shopping_cart_text}',
+                'Alert text',
                 allure.attachment_type.TEXT,
             )
             assert alert_text == 'Success: You have added MacBook to your shopping cart!\n×'

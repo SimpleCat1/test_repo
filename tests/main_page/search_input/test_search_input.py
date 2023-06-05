@@ -34,8 +34,8 @@ class TestSearchInput:
                 )
             ]
             allure.attach(
-                'list of products received',
                 received_list_of_products,
+                'list of products received',
                 allure.attachment_type.TEXT,
             )
             SearchPage.check_text_of_products('MacBook', received_list_of_products)
@@ -59,8 +59,8 @@ class TestSearchInput:
                 SearchPageLocators.header_result_search,
             )
             allure.attach(
-                'the search title looks like this',
                 header_search,
+                'the search title looks like this',
                 allure.attachment_type.TEXT,
             )
             assert header_search == 'Search'
@@ -90,8 +90,8 @@ class TestSearchInput:
                 SearchPageLocators.header_result_search,
             )
             allure.attach(
-                'the search title looks like this',
                 header_search,
+                'the search title looks like this',
                 allure.attachment_type.TEXT,
             )
             assert header_search == f'Search - {data}'

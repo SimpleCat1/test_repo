@@ -36,8 +36,8 @@ class TestCatalog:
                 f"{len(main_page.driver.find_elements_by_xpath(CatalogPageLocators.breadcrumb))}"
             )
             allure.attach(
-                'Number of elements in bread crumbs',
                 len(main_page.driver.find_elements_by_xpath(CatalogPageLocators.breadcrumb)),
+                'Number of elements in bread crumbs',
                 allure.attachment_type.TEXT,
             )
             assert len(main_page.driver.find_elements_by_xpath(CatalogPageLocators.breadcrumb)) == 3
@@ -61,7 +61,7 @@ class TestCatalog:
 
         with allure.step('Data verification'):
             current_url: str = main_page.driver.current_url
-            allure.attach('browser url', current_url, allure.attachment_type.TEXT)
+            allure.attach(current_url, 'browser url', allure.attachment_type.TEXT)
             assert (
                 current_url
                 == ''.join((request.config.getoption("--url"), '/index.php?route=common/home'))
@@ -94,5 +94,5 @@ class TestCatalog:
 
         with allure.step('Data verification'):
             catalog_title: str = main_page.get_text_element(CatalogPageLocators.header_catalog)
-            allure.attach('catalog title', catalog_title, allure.attachment_type.TEXT)
+            allure.attach(catalog_title, 'catalog title', allure.attachment_type.TEXT)
             assert catalog_title == data.name
