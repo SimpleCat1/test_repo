@@ -1,5 +1,4 @@
 class AdminAddingProductLocators:
-    catalog = "//li[@id='menu-catalog']/a[contains(@class,collapsed)]"
     add_new_product = "//a[@data-original-title='Add New']"
     product_name = "//input[@id='input-name1']"
     meta_tag_title = "//input[@id='input-meta-title1']"

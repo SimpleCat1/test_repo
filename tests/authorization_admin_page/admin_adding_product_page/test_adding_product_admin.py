@@ -5,6 +5,7 @@ import allure
 import settings
 from tests.authorization_admin_page.admin_adding_product_page.admin_adding_product_locators import AdminAddingProductLocators
 from tests.authorization_admin_page.admin_adding_product_page.admin_adding_product_page import AdminAddingProductPage
+from tests.authorization_admin_page.admin_page.admin_locators import AdminLocators
 
 if TYPE_CHECKING:
     from selenium.webdriver.chrome.webdriver import WebDriver
@@ -27,7 +28,7 @@ class TestAddingProductAdmin:
         admin_page.authorization(settings.USER, settings.PASSWORD)
 
         with allure.step('product creation'):
-            admin_page.click(AdminAddingProductLocators.catalog, 'element_visibility')
+            admin_page.click(AdminLocators.catalog, 'element_visibility')
             admin_page.click(admin_page.products, 'element_visibility')
             admin_page.click(AdminAddingProductLocators.add_new_product, 'element_visibility')
             admin_page.data_entry('12', AdminAddingProductLocators.product_name, 'element_visibility')
