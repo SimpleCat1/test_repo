@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from tests.main_page.main_page_locators import MainPageLocators
+from tests.main_page.main_locators import MainLocators
 from tests.main_page.user_registration_page.registration_page import RegistrationPage
 
 
@@ -31,9 +31,9 @@ def logout(registration_page: RegistrationPage) -> None:
     element_found: bool = (
         WebDriverWait(registration_page.driver, 5).until(EC.invisibility_of_element_located((
             By.XPATH,
-            MainPageLocators.dropdown_my_account_logout,
+            MainLocators.dropdown_my_account_logout,
         )))
     )
     if isinstance(element_found, WebElement):
-        registration_page.click(MainPageLocators.dropdown_my_account, 'element_visibility')
-        registration_page.click(MainPageLocators.dropdown_my_account_logout, 'element_visibility')
+        registration_page.click(MainLocators.dropdown_my_account, 'element_visibility')
+        registration_page.click(MainLocators.dropdown_my_account_logout, 'element_visibility')

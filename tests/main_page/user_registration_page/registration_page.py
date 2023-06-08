@@ -8,8 +8,8 @@ from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.opera.webdriver import WebDriver
 
 from tests.main_page.main_page import MainPage
-from tests.main_page.user_registration_page.registration_page_locators import (
-    RegistrationPageLocators,
+from tests.main_page.user_registration_page.registration_locators import (
+    RegistrationLocators,
 )
 
 
@@ -24,7 +24,7 @@ class RegistrationPage(MainPage):
         """
         url_for_open = ''.join((
             self.request.config.getoption("--url"),
-            RegistrationPageLocators.url_page,
+            RegistrationLocators.url_page,
         ))
         if self.driver.current_url != url_for_open:
             self.open_url(url_for_open)
@@ -48,23 +48,23 @@ class RegistrationPage(MainPage):
         e_mail: Union[str, int] = e_mail or faker.Faker().providers[11].ascii_email()
         telephone: Union[str, int] = telephone or faker.Faker().providers[5].phone_number()
 
-        self.data_entry(first_name, RegistrationPageLocators.first_name, 'element_visibility')
-        self.data_entry(last_name, RegistrationPageLocators.last_name, 'element_visibility')
-        self.data_entry(e_mail, RegistrationPageLocators.e_mail, 'element_visibility')
-        self.data_entry(telephone, RegistrationPageLocators.telephone, 'element_visibility')
-        self.data_entry(password, RegistrationPageLocators.password, 'element_visibility')
+        self.data_entry(first_name, RegistrationLocators.first_name, 'element_visibility')
+        self.data_entry(last_name, RegistrationLocators.last_name, 'element_visibility')
+        self.data_entry(e_mail, RegistrationLocators.e_mail, 'element_visibility')
+        self.data_entry(telephone, RegistrationLocators.telephone, 'element_visibility')
+        self.data_entry(password, RegistrationLocators.password, 'element_visibility')
         self.data_entry(
             password_confirm,
-            RegistrationPageLocators.password_confirm,
+            RegistrationLocators.password_confirm,
             'element_visibility',
         )
         if (
             not self.driver.find_element_by_xpath(
-                RegistrationPageLocators.privacy_policy,
+                RegistrationLocators.privacy_policy,
             ).is_selected()
         ):
-            self.click(RegistrationPageLocators.privacy_policy, 'element_visibility')
-        self.click(RegistrationPageLocators.button_continue, 'element_visibility')
+            self.click(RegistrationLocators.privacy_policy, 'element_visibility')
+        self.click(RegistrationLocators.button_continue, 'element_visibility')
         allure.attach(
             f"""
             <html>

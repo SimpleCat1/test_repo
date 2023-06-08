@@ -1,4 +1,4 @@
-class AuthorizationPageLocators:
+class AuthorizationLocators:
     username = "//input[@id='input-username']"
     password = "//input[@id='input-password']"
     button_login = "//button[contains(@class,'btn')]"

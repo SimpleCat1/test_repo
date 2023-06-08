@@ -1,4 +1,4 @@
-class MainPageLocators:
+class MainLocators:
     dropdown_my_account = "//i[contains(@class,'fa-user')]/ancestor::a/span[@class='caret']"
     dropdown_my_account_register = "//a[contains(@href,'index.php?route=account/register')]"
     dropdown_my_account_login = "//a[contains(@href,'index.php?route=account/login')]"

@@ -5,8 +5,10 @@ from typing import Union, Optional
 
 import allure
 from _pytest.fixtures import FixtureRequest
-from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
+from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException, \
+    TimeoutException
 from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.opera.webdriver import WebDriver
 from selenium.webdriver.common.by import By
@@ -165,18 +167,38 @@ class CommonHelperUi:
             self.driver.find_element_by_xpath(xpath).send_keys(value)
         self.logger.info(f'sent the text to the element: {value}')
 
+    def alert_switch(self) -> Union[Alert, bool]:
+        """
+        Return alert otherwise return false if there is no alert.
+        """
+        try:
+            alert: Alert = WebDriverWait(self.driver, 5).until(EC.alert_is_present())
+            return alert
+        except TimeoutException:
+            return False
+
+    @staticmethod
+    def _create_dir_logs() -> None:
+        """
+        create a "Logs" folder in the project repository.
+        """
+        if not os.path.isdir("../logs"):
+            os.mkdir("../logs")
+
     def _log_create(self) -> None:
         """
         Create an action step in a .log file, with the date and logging level.
 
         If the file exists, it will overwrite it.
         """
+        CommonHelperUi._create_dir_logs()
+
         if self.logger is None:
             name_test: str = self.request.node.fspath.purebasename
             path: str
             try:
                 path = re.findall('.*test_repo', os.path.abspath(os.curdir))[0]
-            except IndexError as e:
+            except IndexError:
                 path = '/var/jenkins_home/workspace/pytest'
             self.logger = logging.getLogger(name_test)
             file_handler = logging.FileHandler(f"{path}\\logs\\{name_test}.log", 'w+', 'utf-8')

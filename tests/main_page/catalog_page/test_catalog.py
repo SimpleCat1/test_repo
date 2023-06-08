@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 import allure
 import pytest
 
-from tests.main_page.catalog_page.catalog_page_locators import CatalogPageLocators
+from tests.main_page.catalog_page.catalog_locators import CatalogLocators
 from tests.main_page.catalog_page.parametrization_catalog import ParametrizationCatalog
 
 if TYPE_CHECKING:
@@ -28,19 +28,19 @@ class TestCatalog:
 
         with allure.step('Data verification'):
             assert (
-                    main_page.get_text_element(CatalogPageLocators.breadcrumb_last_elements)
+                    main_page.get_text_element(CatalogLocators.breadcrumb_last_elements)
                     == 'Monitors'
             )
             main_page.logger.info(
                 "So many elements have been found: "
-                f"{len(main_page.driver.find_elements_by_xpath(CatalogPageLocators.breadcrumb))}"
+                f"{len(main_page.driver.find_elements_by_xpath(CatalogLocators.breadcrumb))}"
             )
             allure.attach(
-                len(main_page.driver.find_elements_by_xpath(CatalogPageLocators.breadcrumb)),
+                len(main_page.driver.find_elements_by_xpath(CatalogLocators.breadcrumb)),
                 'Number of elements in bread crumbs',
                 allure.attachment_type.TEXT,
             )
-            assert len(main_page.driver.find_elements_by_xpath(CatalogPageLocators.breadcrumb)) == 3
+            assert len(main_page.driver.find_elements_by_xpath(CatalogLocators.breadcrumb)) == 3
 
     @allure.severity(allure.severity_level.BLOCKER)
     @allure.title("test_return_to_main_page_with_empty_directory")
@@ -57,7 +57,7 @@ class TestCatalog:
         with allure.step('Selecting an item from the Components tab'):
             main_page.click(main_page.components_tab, 'element_visibility')
             main_page.click(main_page.components_tab_mice_and_trackballs, 'element_visibility')
-            main_page.click(CatalogPageLocators.button_continue, 'element_visibility')
+            main_page.click(CatalogLocators.button_continue, 'element_visibility')
 
         with allure.step('Data verification'):
             current_url: str = main_page.driver.current_url
@@ -93,6 +93,6 @@ class TestCatalog:
             )
 
         with allure.step('Data verification'):
-            catalog_title: str = main_page.get_text_element(CatalogPageLocators.header_catalog)
+            catalog_title: str = main_page.get_text_element(CatalogLocators.header_catalog)
             allure.attach(catalog_title, 'catalog title', allure.attachment_type.TEXT)
             assert catalog_title == data.name

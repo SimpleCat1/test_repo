@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 import allure
 import pytest
 
-from tests.main_page.main_page_locators import MainPageLocators
+from tests.main_page.main_locators import MainLocators
 
 if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest
@@ -26,6 +26,6 @@ class TestChangCurrency:
             main_page.changing_currency('EUR')
 
         with allure.step('Data verification'):
-            text_currency: str = main_page.get_text_element(MainPageLocators.currency_value)
+            text_currency: str = main_page.get_text_element(MainLocators.currency_value)
             allure.attach(text_currency, 'Text currency', allure.attachment_type.TEXT)
             assert text_currency == '€'

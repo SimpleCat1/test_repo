@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 import allure
 import pytest
 
-from tests.authorization_admin_page.authorization_page_locators import AuthorizationPageLocators
+from tests.authorization_admin_page.authorization_locators import AuthorizationLocators
 from tests.authorization_admin_page.parametrization_admin_authorization import (
     ParametrizationAdminAuthorization,
 )
@@ -35,11 +35,11 @@ class TestAdminPage:
 
         with allure.step('Data verification'):
             alert: str = admin_authorization_page.get_text_element(
-                AuthorizationPageLocators.alert_authorization,
+                AuthorizationLocators.alert_authorization,
             )
             allure.attach(
                 alert,
                 'authorization alert',
                 allure.attachment_type.TEXT,
             )
-            assert alert == 'No match for Username and/or Password.'
+            assert alert == 'No match for Username and/or Password.\n×'

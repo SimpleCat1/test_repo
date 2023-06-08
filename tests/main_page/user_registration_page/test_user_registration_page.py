@@ -3,12 +3,12 @@ from typing import TYPE_CHECKING
 import allure
 import pytest
 
-from tests.main_page.main_page_locators import MainPageLocators
+from tests.main_page.main_locators import MainLocators
 from tests.main_page.user_registration_page.parametrization_registration_user import (
     ParametrizationRegistrationUser,
 )
-from tests.main_page.user_registration_page.registration_page_locators import (
-    RegistrationPageLocators,
+from tests.main_page.user_registration_page.registration_locators import (
+    RegistrationLocators,
 )
 if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest
@@ -27,11 +27,11 @@ class TestUserRegistrationPage:
             main_page: 'MainPage',
     ):
         main_page.open_url(f'{request.config.getoption("--url")}')
-        main_page.click(MainPageLocators.dropdown_my_account, 'element_visibility')
-        main_page.click(MainPageLocators.dropdown_my_account_register, 'element_visibility')
+        main_page.click(MainLocators.dropdown_my_account, 'element_visibility')
+        main_page.click(MainLocators.dropdown_my_account_register, 'element_visibility')
 
         with allure.step('Data verification'):
-            heading: str = main_page.get_text_element(RegistrationPageLocators.header_registration)
+            heading: str = main_page.get_text_element(RegistrationLocators.header_registration)
             allure.attach(heading, 'Heading', allure.attachment_type.TEXT)
             assert heading == 'Register Account'
 
@@ -46,14 +46,14 @@ class TestUserRegistrationPage:
     ):
         registration_page.open_url(''.join((
             request.config.getoption("--url"),
-            RegistrationPageLocators.url_page,
+            RegistrationLocators.url_page,
         )))
         with allure.step('Entering data for user registration and clicking the "accept" button'):
             registration_page.user_registration('1111', '1111')
 
         with allure.step('Data verification'):
             header_page_registration: str = registration_page.get_text_element(
-                RegistrationPageLocators.header_success_registration,
+                RegistrationLocators.header_success_registration,
                 'element_visibility',
             )
             allure.attach(
@@ -119,7 +119,7 @@ class TestUserRegistrationPage:
 
         with allure.step('Data verification'):
             popup_error_password: str = registration_page.get_text_element(
-                RegistrationPageLocators.popup_error_password,
+                RegistrationLocators.popup_error_password,
             )
             allure.attach(popup_error_password, 'popup Input errors', allure.attachment_type.TEXT)
             assert popup_error_password == data.check
@@ -148,7 +148,7 @@ class TestUserRegistrationPage:
 
         with allure.step('Data verification'):
             popup_error_password_confirm: str = registration_page.get_text_element(
-                RegistrationPageLocators.popup_error_password_confirm,
+                RegistrationLocators.popup_error_password_confirm,
             )
             allure.attach(
                 popup_error_password_confirm,
@@ -180,7 +180,7 @@ class TestUserRegistrationPage:
 
         with allure.step('Data verification'):
             popup_error_telephone: str = registration_page.get_text_element(
-                RegistrationPageLocators.popup_error_telephone,
+                RegistrationLocators.popup_error_telephone,
             )
             allure.attach(popup_error_telephone, 'popup Input errors', allure.attachment_type.TEXT)
             assert popup_error_telephone == data.check
@@ -195,7 +195,7 @@ class TestUserRegistrationPage:
     ):
         registration_page.open_url(''.join((
             request.config.getoption("--url"),
-            RegistrationPageLocators.url_page,
+            RegistrationLocators.url_page,
         )))
         with allure.step('Entering data for user registration and clicking the "accept" button'):
             registration_page.user_registration('1111', '1111', e_mail='asdf')

@@ -4,8 +4,8 @@ import allure
 import pytest
 
 from tests.main_page.search_input.parametrization_search import ParametrizationSearch
-from tests.main_page.search_input.search_page_locators import SearchPageLocators
-from tests.main_page.main_page_locators import MainPageLocators
+from tests.main_page.search_input.search_locators import SearchLocators
+from tests.main_page.main_locators import MainLocators
 from tests.main_page.search_input.search_page import SearchPage
 
 if TYPE_CHECKING:
@@ -24,13 +24,13 @@ class TestSearchInput:
     ):
         search_page.open_url(request.config.getoption("--url"))
         with allure.step('Go to the registration page via the "My Account" drop-down list'):
-            search_page.data_entry('MacBook', MainPageLocators.input_search)
-            search_page.click(MainPageLocators.button_search)
+            search_page.data_entry('MacBook', MainLocators.input_search)
+            search_page.click(MainLocators.button_search)
 
         with allure.step('Data verification'):
             received_list_of_products: List[str] = [
                 unit for unit in search_page.get_text_from_products(
-                    SearchPageLocators.name_products,
+                    SearchLocators.name_products,
                 )
             ]
             allure.attach(
@@ -50,13 +50,13 @@ class TestSearchInput:
     ):
         search_page.open_url(request.config.getoption("--url"))
         with allure.step('Go to the registration page via the "My Account" drop-down list'):
-            search_page.data_entry('', MainPageLocators.input_search)
-            search_page.click(MainPageLocators.button_search)
+            search_page.data_entry('', MainLocators.input_search)
+            search_page.click(MainLocators.button_search)
 
         with allure.step('Data verification'):
-            search_page.element_invisibility(SearchPageLocators.card_products)
+            search_page.element_invisibility(SearchLocators.card_products)
             header_search: str = search_page.get_text_element(
-                SearchPageLocators.header_result_search,
+                SearchLocators.header_result_search,
             )
             allure.attach(
                 header_search,
@@ -81,13 +81,13 @@ class TestSearchInput:
     ):
         search_page.open_url(request.config.getoption("--url"))
         with allure.step('Go to the registration page via the "My Account" drop-down list'):
-            search_page.data_entry(data, MainPageLocators.input_search)
-            search_page.click(MainPageLocators.button_search)
+            search_page.data_entry(data, MainLocators.input_search)
+            search_page.click(MainLocators.button_search)
 
         with allure.step('Data verification'):
-            search_page.element_invisibility(SearchPageLocators.card_products)
+            search_page.element_invisibility(SearchLocators.card_products)
             header_search: str = search_page.get_text_element(
-                SearchPageLocators.header_result_search,
+                SearchLocators.header_result_search,
             )
             allure.attach(
                 header_search,

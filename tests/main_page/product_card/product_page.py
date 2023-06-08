@@ -6,7 +6,7 @@ from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.opera.webdriver import WebDriver
 
 from tests.main_page.main_page import MainPage
-from tests.main_page.product_card.product_page_locators import ProductPageLocators
+from tests.main_page.product_card.product_locators import ProductLocators
 
 
 class ProductPage(MainPage):
@@ -42,8 +42,8 @@ class ProductPage(MainPage):
         """
         Adding the quantity of the product to the Input of the product card.
         """
-        self.data_entry(data, ProductPageLocators.input_count_product)
-        self.click(ProductPageLocators.button_add_count_product)
+        self.data_entry(data, ProductLocators.input_count_product)
+        self.click(ProductLocators.button_add_count_product)
         return float(self.get_text_element(
-            ProductPageLocators.text_cost_of_product,
+            ProductLocators.text_cost_of_product,
         ).replace('$', ''))

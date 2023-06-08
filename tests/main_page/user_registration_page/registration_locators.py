@@ -1,4 +1,4 @@
-class RegistrationPageLocators:
+class RegistrationLocators:
     url_page = "/index.php?route=account/register"
     header_registration = "//div[@id='content']/h1"
     first_name = "//input[@id='input-firstname']"

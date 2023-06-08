@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 import allure
 import pytest
 
-from tests.main_page.main_page_locators import MainPageLocators
+from tests.main_page.main_locators import MainLocators
 
 if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest
@@ -24,15 +24,15 @@ class TestAddItemFromShoppingCart:
     ):
         main_page.open_url(request.config.getoption("--url"))
         with allure.step('Adding the product to the cart'):
-            main_page.click(MainPageLocators.add_item, 'element_visibility')
+            main_page.click(MainLocators.add_item, 'element_visibility')
 
         with allure.step('Data verification'):
             alert_text: str = main_page.get_text_element(
-                MainPageLocators.alert,
+                MainLocators.alert,
                 'element_visibility',
             )
             shopping_cart_text: bool = main_page.text_to_be_present(
-                MainPageLocators.basket,
+                MainLocators.basket,
                 '1 item(s) - $602.00',
             )
             allure.attach(alert_text, 'Alert text', allure.attachment_type.TEXT)

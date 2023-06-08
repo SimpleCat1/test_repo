@@ -15,3 +15,7 @@ class AdminPage(AuthorizationAdminPage):
             request.config.getoption("--url"),
             '/admin/index.php?route=catalog/product', "')]",
         ))
+
+    @staticmethod
+    def get_table_product_name(name_product: str) -> str:
+        return f"//tbody/tr[1]/td[3][contains(text(),'{name_product}')]"
