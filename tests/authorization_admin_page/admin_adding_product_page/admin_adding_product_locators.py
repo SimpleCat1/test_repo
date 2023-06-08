@@ -6,5 +6,4 @@ class AdminAddingProductLocators:
     tab_data = "//a[@href='#tab-data']"
     model = "//input[@id='input-model']"
     save_button = "//button[@data-original-title='Save']"
-    table_checkbox = "//tbody/tr[1]/td[1]/input"
     button_delete_product = "//button[@data-original-title='Delete']"
