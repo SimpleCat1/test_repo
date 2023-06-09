@@ -33,6 +33,7 @@ class MainPage(CommonHelperUi):
         Change the currency on the main page.
         """
         self._log_create()
+        self.logger.info(f'change currency to {currency}')
         self.click("//i[contains(@class,'fa-caret-down')]", 'element_visibility')
         self.click(f"//button[@name='{currency}']")
 
@@ -42,6 +43,7 @@ class MainPage(CommonHelperUi):
         Clears the cart of products on the main page.
         """
         self._log_create()
+        self.logger.info('emptying the basket')
         self.element_invisibility('//div[@id="cart"]/ul/li/p')
         self.click('//button[contains(@class,"btn-inverse")]', 'element_visibility')
         self.click('//button[contains(@class,"btn-danger")]', 'element_visibility')

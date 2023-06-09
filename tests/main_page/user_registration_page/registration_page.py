@@ -26,9 +26,9 @@ class RegistrationPage(MainPage):
             self.request.config.getoption("--url"),
             RegistrationLocators.url_page,
         ))
-        if self.driver.current_url != url_for_open:
-            self.open_url(url_for_open)
+        self.check_need_url(url_for_open)
 
+    @allure.step('User registration')
     def user_registration(
             self,
             password: Union[str, int],
@@ -97,4 +97,9 @@ class RegistrationPage(MainPage):
             """,
             "HTML attachment",
             allure.attachment_type.HTML,
+        )
+        self.logger.info(
+            f'Data that was sent during registration: first_name: {first_name},'
+            f' last_name: {last_name}, e_mail: {e_mail}, telephone: {telephone},'
+            f' password: {password}, password_confirm: {password_confirm}'
         )

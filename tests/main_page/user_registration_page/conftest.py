@@ -1,3 +1,4 @@
+import allure
 import pytest
 from _pytest.fixtures import SubRequest
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -22,12 +23,14 @@ def registration_page(browser: WebDriver, request: SubRequest) -> RegistrationPa
     return get_methods_page()
 
 
+@allure.step('log out')
 @pytest.fixture
 def logout(registration_page: RegistrationPage) -> None:
     """
     Log out of the authorized account.
     """
     yield
+    registration_page.logger.info('check for authorization. If not authorized, then do nothing.')
     element_found: bool = (
         WebDriverWait(registration_page.driver, 5).until(EC.invisibility_of_element_located((
             By.XPATH,
@@ -35,5 +38,6 @@ def logout(registration_page: RegistrationPage) -> None:
         )))
     )
     if isinstance(element_found, WebElement):
+        registration_page.logger.info('log out.')
         registration_page.click(MainLocators.dropdown_my_account, 'element_visibility')
         registration_page.click(MainLocators.dropdown_my_account_logout, 'element_visibility')

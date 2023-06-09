@@ -34,11 +34,11 @@ class TestSearchInput:
                 )
             ]
             allure.attach(
-                received_list_of_products,
+                ', '.join(received_list_of_products),
                 'list of products received',
                 allure.attachment_type.TEXT,
             )
-            SearchPage.check_text_of_products('MacBook', received_list_of_products)
+            search_page.check_text_of_products('MacBook', received_list_of_products)
 
     @allure.severity(allure.severity_level.BLOCKER)
     @allure.title("test_empty_search_input")

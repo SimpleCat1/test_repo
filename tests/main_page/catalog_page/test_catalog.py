@@ -75,7 +75,7 @@ class TestCatalog:
     @allure.severity(allure.severity_level.BLOCKER)
     @allure.title("test_mice_and_trackballs_title")
     @allure.description(
-        "The 'Mice and Trackballs' product page is displayed when clicking on the 'Components' tab." \
+        "The 'Mice and Trackballs' product page is displayed when clicking on the 'Components' tab."
         " Checking the header",
     )
     def test_mice_and_trackballs_title(

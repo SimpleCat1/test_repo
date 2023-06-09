@@ -50,8 +50,7 @@ class TestProductCard:
     ):
         product_card_page.open_url_card_page('macbook')
 
-        with allure.step('Data verification'):
-            cost_of_product: float = product_card_page.adding_quantity_of_product(data.count_product)
+        cost_of_product: float = product_card_page.adding_quantity_of_product(data.count_product)
 
         with allure.step('Data verification'):
             alert_text: str = product_card_page.get_text_element(

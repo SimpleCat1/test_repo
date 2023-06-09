@@ -8,11 +8,12 @@ from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.opera.webdriver import WebDriver
 
 
+@allure.step("Return the currency to the default value. (USD)")
 @pytest.fixture
 def return_default_currency_settings(browser: WebDriver, main_page: MainPage) -> None:
     """
     Return the currency to the default value.
     """
     yield
-    with allure.step('We return the currency settings to default'):
-        main_page.changing_currency('USD')
+    main_page.logger.info('Return the currency to the default value. (USD)')
+    main_page.changing_currency('USD')

@@ -5,8 +5,11 @@ from typing import Union, Optional
 
 import allure
 from _pytest.fixtures import FixtureRequest
-from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException, \
-    TimeoutException
+from selenium.common.exceptions import (
+    NoSuchElementException,
+    StaleElementReferenceException,
+    TimeoutException,
+)
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.firefox.webdriver import WebDriver
@@ -67,7 +70,7 @@ class CommonHelperUi:
     )
     def element_invisibility(self, xpath: str) -> None:
         self._log_create()
-        self.logger.info('Owe are waiting for the element to appear in the DOM of the Html page')
+        self.logger.info('wait, the element will not appear in the DOM of the Html page.')
         element_found: bool = (
             WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((
                 By.XPATH,
@@ -82,7 +85,10 @@ class CommonHelperUi:
     @allure.step("We expect that xpath: {xpath} will have this text: {text}")
     def text_to_be_present(self, xpath: str, text: str) -> bool:
         self._log_create()
-        self.logger.info('Owe are waiting for the element to appear in the DOM of the Html page')
+        self.logger.info(
+            f'We are waiting for the element: {xpath} to appear in the DOM of the Html page with'
+            f' text {text}'
+        )
         element_found: bool = (
             WebDriverWait(self.driver, 10).until(EC.text_to_be_present_in_element(
                 (By.XPATH, xpath), text),
@@ -104,6 +110,7 @@ class CommonHelperUi:
         The method is intended both for normal pressing and for calling an explicit element waiting
         """
         self._log_create()
+        self.logger.info(f'click on the element: {xpath}')
         if explicit_expectation_method:
             self.__getattribute__(explicit_expectation_method)(xpath).click()
         else:
@@ -113,8 +120,25 @@ class CommonHelperUi:
     @allure.step("Opening the site by url: {url}")
     def open_url(self, url: str = None) -> None:
         self._log_create()
+        self.logger.info(f'Opening the site by url: {url}')
         self.driver.get(url)
         self.logger.info(f'Open the url: {url}')
+
+    @allure.step("check expected page: {url_for_open}")
+    def check_need_url(self, url_for_open: str = None) -> None:
+        """
+        Check url with expected.
+
+        Otherwise, open the expected.
+        """
+        self._log_create()
+        self.logger.info(
+            'check that the url matches the admin registration page. If the page is the right one,'
+            ' do nothing'
+        )
+        if self.driver.current_url != url_for_open:
+            self.logger.info('the page is different, go to the admin registration page')
+            self.open_url(url_for_open)
 
     @allure.step("Getting the text from the element xpath: {xpath}")
     def get_text_element(self, xpath: str = None, explicit_expectation_method: str = None) -> str:
@@ -135,6 +159,7 @@ class CommonHelperUi:
                         ' to give a new locator'
                     )
         self._log_create()
+        self.logger.info(f'get text from element: {xpath}')
         if explicit_expectation_method:
             text = _attempts_to_get_text()
             self.logger.info(f'got the text from the element: {text}')
@@ -145,9 +170,7 @@ class CommonHelperUi:
             )
             return self.driver.find_element_by_xpath(xpath).text
 
-    @allure.step(
-        "Sending the text {value} to the element xpath: {xpath}",
-    )
+    @allure.step("Sending the text {value} to the element xpath: {xpath}")
     def data_entry(
             self,
             value: str,
@@ -158,6 +181,7 @@ class CommonHelperUi:
         The method is intended both for normal input and for calling an explicit element wait
         """
         self._log_create()
+        self.logger.info(f'enter data: {value} in the field: {xpath}')
         if explicit_expectation_method:
             web_element: WebElement = self.__getattribute__(explicit_expectation_method)(xpath)
             web_element.clear()
@@ -167,10 +191,12 @@ class CommonHelperUi:
             self.driver.find_element_by_xpath(xpath).send_keys(value)
         self.logger.info(f'sent the text to the element: {value}')
 
+    @allure.step("switch to work with alert on the web page")
     def alert_switch(self) -> Union[Alert, bool]:
         """
         Return alert otherwise return false if there is no alert.
         """
+        self.logger.info('switch to work with alert on the web page')
         try:
             alert: Alert = WebDriverWait(self.driver, 5).until(EC.alert_is_present())
             return alert
