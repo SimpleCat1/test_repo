@@ -36,7 +36,7 @@ class TestCatalog:
                 f"{len(main_page.driver.find_elements_by_xpath(CatalogLocators.breadcrumb))}"
             )
             allure.attach(
-                len(main_page.driver.find_elements_by_xpath(CatalogLocators.breadcrumb)),
+                str(len(main_page.driver.find_elements_by_xpath(CatalogLocators.breadcrumb))),
                 'Number of elements in bread crumbs',
                 allure.attachment_type.TEXT,
             )
