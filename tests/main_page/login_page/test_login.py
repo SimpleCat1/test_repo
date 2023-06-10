@@ -10,12 +10,12 @@ if TYPE_CHECKING:
     from tests.main_page.main_page import MainPage
 
 
-class TestAdminLogin:
+class TestLogin:
 
     @allure.severity(allure.severity_level.BLOCKER)
-    @allure.title("test_admin_login_page")
+    @allure.title("test_login_page")
     @allure.description("The Login page is displayed when navigating through the tab")
-    def test_admin_login_page(
+    def test_login_page(
             self,
             request: 'FixtureRequest',
             main_page: 'MainPage',
