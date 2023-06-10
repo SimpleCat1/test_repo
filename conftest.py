@@ -30,7 +30,7 @@ def pytest_addoption(parser: Parser) -> None:
         type=str,
         action='store',
         default='chrome',
-        help="Choose browser: chrome or firefox",
+        help="Choose browser: chrome or firefox or opera",
     )
     parser.addoption(
         '--remote',
@@ -51,14 +51,14 @@ def pytest_addoption(parser: Parser) -> None:
         type=str,
         action='store',
         default='80',
-        help="Choose browser version: 80 or 81",
+        help="Choose browser version: 80 or 81 ...",
     )
     parser.addoption(
         '--browser_without_interfaces',
         type=str,
         action='store',
         default='false',
-        help="Choose whether to display the browser: True or False",
+        help="Choose whether to display the browser: true or false",
     )
 
 
