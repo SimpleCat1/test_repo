@@ -3,4 +3,5 @@
 .venv/
 .env
 *.log
+logs/
 allure-results/
