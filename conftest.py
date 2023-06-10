@@ -79,7 +79,7 @@ def pytest_runtest_makereport(item: Function) -> None:
 def take_screenshot(driver: WebDriver, nodeid: str) -> None:
     file_name = (
         f'{nodeid}_{datetime.today().strftime("%Y-%m-%d_%H:%M")}.png'
-        .replace("/","_").replace("::","__")
+        .replace("/", "_").replace("::", "__")
     )
     allure.attach(
         driver.get_screenshot_as_png(),
@@ -200,4 +200,3 @@ def main_page(browser: WebDriver, request: SubRequest) -> MainPage:
         return MainPage(browser, request)
 
     return get_methods_page()
-
