@@ -208,8 +208,9 @@ class CommonHelperUi:
         """
         create a "Logs" folder in the project repository.
         """
-        if not os.path.isdir("../logs"):
-            os.mkdir("../logs")
+        path_root: str = re.findall('.*test_repo', os.path.abspath(os.curdir))[0]
+        if not os.path.isdir('/'.join((path_root, 'logs'))):
+            os.mkdir('/'.join((path_root, 'logs')))
 
     def _log_create(self) -> None:
         """
