@@ -71,16 +71,19 @@ class CommonHelperUi:
     def element_invisibility(self, xpath: str) -> None:
         self._log_create()
         self.logger.info('wait, the element will not appear in the DOM of the Html page.')
-        element_found: bool = (
-            WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((
-                By.XPATH,
-                xpath,
-            )))
-        )
-        if not element_found:
-            self.logger.critical(f'Element: {xpath} was not found')
-            raise TimeoutError(f'Element: {xpath} was not found')
-        self.logger.info(f'The element is invisibility: {xpath}')
+        try:
+            element_found: bool = (
+                WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((
+                    By.XPATH,
+                    xpath,
+                )))
+            )
+            self.logger.info(f'The element is invisibility: {xpath}')
+            if not element_found:
+                self.logger.critical(f'Element: {xpath} was not found.')
+        except TimeoutException as e:
+            self.logger.critical(f'Element: {xpath} was not found. {e}')
+            raise TimeoutException(e)
 
     @allure.step("We expect that xpath: {xpath} will have this text: {text}")
     def text_to_be_present(self, xpath: str, text: str) -> bool:
