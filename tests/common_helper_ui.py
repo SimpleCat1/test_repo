@@ -81,6 +81,7 @@ class CommonHelperUi:
             self.logger.info(f'The element is invisibility: {xpath}')
             if not element_found:
                 self.logger.critical(f'Element: {xpath} was not found.')
+                raise TimeoutError(f'Element: {xpath} was not found')
         except TimeoutException as e:
             self.logger.critical(f'Element: {xpath} was not found. {e}')
             raise TimeoutException(e)
